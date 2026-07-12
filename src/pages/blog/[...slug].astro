@@ -1,0 +1,130 @@
+---
+import { getCollection, render } from "astro:content";
+import Base from "../../layouts/Base.astro";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog");
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const fmt = post.data.date.toLocaleDateString("en-US", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  headline: post.data.title,
+  description: post.data.description,
+  datePublished: post.data.date.toISOString(),
+  author: { "@type": "Person", name: "Henry Wang" },
+  url: new URL(`/blog/${post.id}/`, Astro.site).toString(),
+};
+---
+
+<Base
+  title={`${post.data.title} — Berthly blog`}
+  description={post.data.description}
+  ogType="article"
+  jsonLd={jsonLd}
+>
+  <article class="container">
+    <div class="meta">
+      {post.data.tags.map((tag) => (
+        <a class:list={["tag", `tag-${tag}`]} href={`/tags/${tag}/`}>{tag}</a>
+      ))}
+      <span>{fmt}</span>
+    </div>
+    <h1>{post.data.title}</h1>
+    <div class="prose">
+      <Content />
+    </div>
+    <p class="back"><a href="/blog/">← All posts</a></p>
+  </article>
+</Base>
+
+<style>
+  article { max-width: calc(68ch + 48px); padding-block: 56px; }
+  .meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13.5px;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+  h1 {
+    font-size: clamp(30px, 5vw, 38px);
+    font-weight: 800;
+    letter-spacing: -0.022em;
+    line-height: 1.15;
+    margin-bottom: 22px;
+  }
+  .back { margin-top: 40px; font-size: 14.5px; }
+  .back a { text-decoration: none; font-weight: 600; }
+
+  .prose :global(p) {
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--body);
+    margin: 0 0 20px;
+  }
+  .prose :global(h2) {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    margin: 34px 0 14px;
+  }
+  .prose :global(h3) {
+    font-size: 18px;
+    font-weight: 650;
+    margin: 26px 0 10px;
+  }
+  .prose :global(a) {
+    color: var(--accent);
+    text-decoration: underline;
+    text-decoration-color: var(--water);
+    text-underline-offset: 3px;
+  }
+  .prose :global(code:not(.astro-code code)) {
+    font-size: 15px;
+    background: var(--wash);
+    border: 1px solid var(--border-soft);
+    border-radius: 6px;
+    padding: 1px 6px;
+    color: var(--accent);
+  }
+  .prose :global(.astro-code) {
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin: 0 0 20px;
+    font-size: 13.5px;
+    line-height: 1.65;
+  }
+  .prose :global(blockquote) {
+    border-left: 3px solid var(--water);
+    padding: 2px 0 2px 18px;
+    margin: 0 0 20px;
+  }
+  .prose :global(blockquote p) {
+    color: var(--muted);
+    font-size: 16.5px;
+    margin: 0;
+  }
+  .prose :global(ul),
+  .prose :global(ol) {
+    padding-left: 26px;
+    margin: 0 0 20px;
+    color: var(--body);
+    font-size: 17px;
+    line-height: 1.7;
+  }
+  .prose :global(img) {
+    border-radius: 12px;
+    border: 1px solid var(--border-soft);
+  }
+</style>

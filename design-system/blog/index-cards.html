@@ -1,0 +1,56 @@
+<!-- @dsCard group="Blog" name="Blog index" subtitle="Post cards with tag pills — design / devlog / release / news" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Berthly — Blog index</title>
+<style>
+  * { margin:0; box-sizing:border-box; }
+  body {
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Inter,sans-serif;
+    background:#fff; color:#0E1B2C; padding:56px 40px;
+  }
+  .wrap { max-width:760px; margin:0 auto; }
+  h1 { font-size:36px; font-weight:750; letter-spacing:-.02em; }
+  .lede { font-size:16px; color:#51637C; margin:8px 0 24px; }
+  .filters { display:flex; gap:8px; margin-bottom:28px; }
+  .chip { font-size:13px; font-weight:600; border-radius:999px; padding:6px 14px; border:1px solid #D9E6F9; color:#51637C; }
+  .chip.on { background:#2A6FDB; border-color:#2A6FDB; color:#fff; }
+  .post { display:block; padding:22px 0; border-bottom:1px solid #EFF5FE; text-decoration:none; color:inherit; }
+  .meta { display:flex; align-items:center; gap:10px; font-size:13px; color:#51637C; margin-bottom:8px; }
+  .tag { font-size:11.5px; font-weight:650; text-transform:uppercase; letter-spacing:.05em; border-radius:5px; padding:2.5px 8px; }
+  .tag.release { background:#E7F7EE; color:#177A45; }
+  .tag.devlog { background:#EFF5FE; color:#2361C7; }
+  .tag.design { background:#F4EEFC; color:#7A3FBF; }
+  .tag.news { background:#FFF4E3; color:#A96A0B; }
+  .post h2 { font-size:21px; font-weight:700; letter-spacing:-.01em; margin-bottom:6px; }
+  .post:hover h2 { color:#2A6FDB; }
+  .post p { font-size:15px; line-height:1.6; color:#51637C; max-width:64ch; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Blog</h1>
+  <p class="lede">Design notes, devlog, and release announcements from building Berthly.</p>
+  <div class="filters">
+    <span class="chip on">All</span><span class="chip">Design</span><span class="chip">Devlog</span><span class="chip">Releases</span><span class="chip">News</span>
+  </div>
+
+  <a class="post" href="#">
+    <div class="meta"><span class="tag release">Release</span><span>July 8, 2026</span></div>
+    <h2>Berthly 1.2 — live log streaming and a faster image list</h2>
+    <p>Log tailing no longer polls: we attach to the daemon's event stream over XPC, and the images view virtualizes so a thousand tags scroll like ten.</p>
+  </a>
+  <a class="post" href="#">
+    <div class="meta"><span class="tag devlog">Devlog</span><span>June 24, 2026</span></div>
+    <h2>The XPC race that only happened on the second launch</h2>
+    <p>A connection-invalidation bug that survived three rewrites, and what it taught me about launchctl, daemon lifecycles, and trusting my own retry logic.</p>
+  </a>
+  <a class="post" href="#">
+    <div class="meta"><span class="tag design">Design</span><span>June 2, 2026</span></div>
+    <h2>Designing the Berthly icon: a bollard, a rope, and macOS 26's icon jail</h2>
+    <p>Why the mark is a mooring bollard, how the squircle is generated parametrically, and what Tahoe's full-bleed icon rules broke along the way.</p>
+  </a>
+</div>
+</body>
+</html>

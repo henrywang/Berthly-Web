@@ -1,0 +1,59 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  posts: CollectionEntry<"blog">[];
+}
+
+const { posts } = Astro.props;
+const fmt = (d: Date) =>
+  d.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
+---
+
+<div class="list">
+  {
+    posts.map((post) => (
+      <a class="post" href={`/blog/${post.id}/`}>
+        <div class="meta">
+          {post.data.tags.map((tag) => (
+            <span class:list={["tag", `tag-${tag}`]}>{tag}</span>
+          ))}
+          <span>{fmt(post.data.date)}</span>
+        </div>
+        <h2>{post.data.title}</h2>
+        <p>{post.data.description}</p>
+      </a>
+    ))
+  }
+</div>
+
+<style>
+  .post {
+    display: block;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--wash);
+    text-decoration: none;
+    color: inherit;
+  }
+  .meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .post h2 {
+    font-size: 21px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-bottom: 6px;
+  }
+  .post:hover h2 { color: var(--accent); }
+  .post p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--muted);
+    max-width: 64ch;
+  }
+</style>

@@ -1,0 +1,74 @@
+<!-- @dsCard group="Components" name="Footer" subtitle="Waterline divider + links, light & dark" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Berthly — Footer</title>
+<style>
+  * { margin:0; box-sizing:border-box; }
+  body {
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Inter,sans-serif;
+    color:#0E1B2C; background:#fff;
+  }
+  .waterline { display:block; width:100%; height:26px; }
+  footer { padding:28px 40px 34px; }
+  .cols { display:flex; align-items:flex-start; gap:48px; }
+  .id { display:flex; align-items:center; gap:9px; }
+  .id b { font-size:15px; font-weight:700; }
+  .id + p { margin-top:8px; }
+  .blurb { font-size:13px; line-height:1.6; color:#51637C; max-width:34ch; }
+  .group { flex:1; }
+  .group h4 { font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:.08em; color:#51637C; margin-bottom:10px; }
+  .group a { display:block; font-size:14px; color:#33465E; text-decoration:none; padding:3px 0; }
+  .group a:hover { color:#2A6FDB; }
+  .legal { margin-top:26px; padding-top:16px; border-top:1px solid #EFF5FE; font-size:12.5px; color:#51637C;
+           display:flex; justify-content:space-between; }
+  .light-f { background:#EFF5FE; }
+  .dark-f { background:#0F1B30; color:#E8F0FB; }
+  .dark-f .blurb, .dark-f .group h4, .dark-f .legal { color:#9DB2CE; }
+  .dark-f .group a { color:#C4D5EE; }
+  .dark-f .group a:hover { color:#8FB6F0; }
+  .dark-f .legal { border-top-color:#1D2E4A; }
+  .dark-f .id b { color:#E8F0FB; }
+</style>
+</head>
+<body>
+  <div>
+    <svg class="waterline" viewBox="0 0 1200 26" preserveAspectRatio="none"><path d="M0 14 Q150 4 300 14 T600 14 T900 14 T1200 14 V26 H0 Z" fill="#EFF5FE"/><path d="M0 14 Q150 4 300 14 T600 14 T900 14 T1200 14" stroke="#B9D4FB" stroke-width="2" fill="none"/></svg>
+    <footer class="light-f">
+      <div class="cols">
+        <div>
+          <div class="id">
+            <svg width="22" height="22" viewBox="0 0 36 36" fill="#51637C"><rect x="11" y="4" width="14" height="6" rx="3"/><rect x="14" y="8" width="8" height="18"/><rect x="9" y="26" width="18" height="6" rx="2"/><path d="M9 16 Q18 21.5 27 16" stroke="#51637C" stroke-width="2.5" stroke-linecap="round" fill="none"/><path d="M9 16 Q5.5 21 5 27" stroke="#51637C" stroke-width="2.5" stroke-linecap="round" fill="none"/></svg>
+            <b>Berthly</b>
+          </div>
+          <p class="blurb">A native macOS GUI for Apple's container tool. Free &amp; open source.</p>
+        </div>
+        <div class="group"><h4>Project</h4><a href="#">Download</a><a href="#">Features</a><a href="#">GitHub</a></div>
+        <div class="group"><h4>Blog</h4><a href="#">All posts</a><a href="#">Releases</a><a href="#">RSS</a></div>
+        <div class="group"><h4>Support</h4><a href="#">Report an issue</a><a href="#">Security policy</a><a href="#">Contributing</a></div>
+      </div>
+      <div class="legal"><span>© 2026 Henry Wang · Apache-2.0</span><span>No cookies, no trackers — just like the app.</span></div>
+    </footer>
+  </div>
+
+  <div style="margin-top:28px; background:#0B1526; padding-top:1px;">
+    <svg class="waterline" viewBox="0 0 1200 26" preserveAspectRatio="none"><rect width="1200" height="26" fill="#0B1526"/><path d="M0 14 Q150 4 300 14 T600 14 T900 14 T1200 14 V26 H0 Z" fill="#0F1B30"/><path d="M0 14 Q150 4 300 14 T600 14 T900 14 T1200 14" stroke="#2E4368" stroke-width="2" fill="none"/></svg>
+    <footer class="dark-f">
+      <div class="cols">
+        <div>
+          <div class="id">
+            <svg width="22" height="22" viewBox="0 0 36 36" fill="#9DB2CE"><rect x="11" y="4" width="14" height="6" rx="3"/><rect x="14" y="8" width="8" height="18"/><rect x="9" y="26" width="18" height="6" rx="2"/><path d="M9 16 Q18 21.5 27 16" stroke="#9DB2CE" stroke-width="2.5" stroke-linecap="round" fill="none"/><path d="M9 16 Q5.5 21 5 27" stroke="#9DB2CE" stroke-width="2.5" stroke-linecap="round" fill="none"/></svg>
+            <b>Berthly</b>
+          </div>
+          <p class="blurb">A native macOS GUI for Apple's container tool. Free &amp; open source.</p>
+        </div>
+        <div class="group"><h4>Project</h4><a href="#">Download</a><a href="#">Features</a><a href="#">GitHub</a></div>
+        <div class="group"><h4>Blog</h4><a href="#">All posts</a><a href="#">Releases</a><a href="#">RSS</a></div>
+        <div class="group"><h4>Support</h4><a href="#">Report an issue</a><a href="#">Security policy</a><a href="#">Contributing</a></div>
+      </div>
+      <div class="legal"><span>© 2026 Henry Wang · Apache-2.0</span><span>No cookies, no trackers — just like the app.</span></div>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0B1526"/>
+      <stop offset="1" stop-color="#0F1B30"/>
+    </linearGradient>
+    <linearGradient id="icon" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3F82EC"/>
+      <stop offset="1" stop-color="#2361C7"/>
+    </linearGradient>
+    <clipPath id="sq"><rect x="96" y="215" width="200" height="200" rx="45"/></clipPath>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <path d="M0 560 Q150 548 300 560 T600 560 T900 560 T1200 560 V630 H0 Z" fill="#111f38"/>
+  <path d="M0 560 Q150 548 300 560 T600 560 T900 560 T1200 560" stroke="#2E4368" stroke-width="3" fill="none"/>
+  <g clip-path="url(#sq)">
+    <rect x="96" y="215" width="200" height="200" fill="url(#icon)"/>
+    <g transform="translate(96,215) scale(0.390625)">
+      <rect x="-40" y="380" width="592" height="184" fill="#B9D4FB"/>
+      <rect x="-40" y="380" width="592" height="16" fill="#8FB6F0"/>
+      <path d="M162 246 Q256 202 350 246" stroke="#8FB6F0" stroke-width="44" stroke-linecap="round" fill="none"/>
+      <rect x="150" y="104" width="212" height="76" rx="38" fill="#FFFFFF"/>
+      <rect x="190" y="160" width="132" height="236" fill="#FFFFFF"/>
+      <rect x="140" y="346" width="232" height="58" rx="16" fill="#FFFFFF"/>
+      <path d="M162 246 Q256 298 350 246" stroke="#8FB6F0" stroke-width="44" stroke-linecap="round" fill="none"/>
+    </g>
+  </g>
+  <text x="344" y="298" font-family="Helvetica Neue, Helvetica, Arial" font-size="86" font-weight="bold" fill="#E8F0FB" letter-spacing="-1.5">Berthly</text>
+  <text x="348" y="356" font-family="Helvetica Neue, Helvetica, Arial" font-size="34" fill="#9DB2CE">A native macOS GUI for Apple's container</text>
+  <text x="348" y="410" font-family="Helvetica Neue, Helvetica, Arial" font-size="26" fill="#51637C">berthly.net · free &amp; open source</text>
+</svg>

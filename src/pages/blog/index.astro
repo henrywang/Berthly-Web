@@ -1,0 +1,45 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import PostList from "../../components/PostList.astro";
+
+const posts = (await getCollection("blog")).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+const tags = ["design", "devlog", "release", "news"] as const;
+---
+
+<Base
+  title="Blog — Berthly"
+  description="Design notes, devlog, and release announcements from building Berthly, the native macOS GUI for Apple's container tool."
+  ogType="blog"
+>
+  <div class="container wrap">
+    <h1>Blog</h1>
+    <p class="lede">Design notes, devlog, and release announcements from building Berthly.</p>
+    <div class="filters">
+      <a class="chip on" href="/blog/">All</a>
+      {tags.map((tag) => <a class="chip" href={`/tags/${tag}/`}>{tag}</a>)}
+    </div>
+    <PostList posts={posts} />
+  </div>
+</Base>
+
+<style>
+  .wrap { max-width: 760px; padding-block: 56px; }
+  h1 { font-size: 36px; font-weight: 750; letter-spacing: -0.02em; }
+  .lede { font-size: 16px; color: var(--muted); margin: 8px 0 24px; }
+  .filters { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+  .chip {
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 999px;
+    padding: 6px 14px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    text-decoration: none;
+    text-transform: capitalize;
+  }
+  .chip:hover { color: var(--accent); border-color: var(--water); }
+  .chip.on { background: var(--brand); border-color: var(--brand); color: #fff; }
+</style>

@@ -1,0 +1,21 @@
+---
+import Base from "../layouts/Base.astro";
+import Logo from "../components/Logo.astro";
+---
+
+<Base title="Not found — Berthly" description="This page slipped its mooring.">
+  <div class="container wrap">
+    <Logo size={72} />
+    <h1>404 — slipped its mooring</h1>
+    <p>The page you're looking for isn't berthed here.</p>
+    <p class="links"><a href="/">Home</a> · <a href="/blog/">Blog</a></p>
+  </div>
+</Base>
+
+<style>
+  .wrap { text-align: center; padding-block: 110px; }
+  h1 { font-size: 32px; font-weight: 750; letter-spacing: -0.02em; margin: 22px 0 8px; }
+  p { color: var(--muted); }
+  .links { margin-top: 18px; font-weight: 600; }
+  .links a { text-decoration: none; }
+</style>

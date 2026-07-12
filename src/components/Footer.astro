@@ -1,0 +1,116 @@
+---
+const year = new Date().getFullYear();
+---
+
+<div class="waterline" aria-hidden="true">
+  <svg viewBox="0 0 1200 26" preserveAspectRatio="none">
+    <path d="M0 14 Q150 4 300 14 T600 14 T900 14 T1200 14 V26 H0 Z" class="fill"></path>
+    <path d="M0 14 Q150 4 300 14 T600 14 T900 14 T1200 14" class="line" fill="none" stroke-width="2"></path>
+  </svg>
+</div>
+<footer>
+  <div class="container">
+    <div class="cols">
+      <div class="brand">
+        <div class="id">
+          <svg width="22" height="22" viewBox="0 0 36 36" fill="currentColor" aria-hidden="true"><rect x="11" y="4" width="14" height="6" rx="3"></rect><rect x="14" y="8" width="8" height="18"></rect><rect x="9" y="26" width="18" height="6" rx="2"></rect><path d="M9 16 Q18 21.5 27 16" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" fill="none"></path><path d="M9 16 Q5.5 21 5 27" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" fill="none"></path></svg>
+          <b>Berthly</b>
+        </div>
+        <p class="blurb">A native macOS GUI for Apple's container tool. Free &amp; open source.</p>
+      </div>
+      <div class="group">
+        <h4>Project</h4>
+        <a href="https://github.com/henrywang/Berthly/releases/latest">Download</a>
+        <a href="/#features">Features</a>
+        <a href="https://github.com/henrywang/Berthly">GitHub</a>
+      </div>
+      <div class="group">
+        <h4>Blog</h4>
+        <a href="/blog/">All posts</a>
+        <a href="/tags/release/">Releases</a>
+        <a href="/rss.xml">RSS</a>
+      </div>
+      <div class="group">
+        <h4>Support</h4>
+        <a href="https://github.com/henrywang/Berthly/issues">Report an issue</a>
+        <a href="https://github.com/henrywang/Berthly/blob/main/SECURITY.md">Security policy</a>
+        <a href="https://github.com/henrywang/Berthly/blob/main/CONTRIBUTING.md">Contributing</a>
+      </div>
+    </div>
+    <div class="legal">
+      <span>© {year} Henry Wang · Apache-2.0</span>
+      <span>No cookies, no trackers — just like the app.</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .waterline svg {
+    display: block;
+    width: 100%;
+    height: 26px;
+  }
+  .waterline .fill { fill: var(--wash); }
+  .waterline .line { stroke: var(--water); }
+  :global([data-theme="dark"]) .waterline .line { stroke: #2e4368; }
+  @media (prefers-color-scheme: dark) {
+    :global(:root:not([data-theme="light"])) .waterline .line { stroke: #2e4368; }
+  }
+  footer {
+    background: var(--wash);
+    padding: 28px 0 34px;
+    color: var(--ink);
+  }
+  .cols {
+    display: flex;
+    align-items: flex-start;
+    gap: 48px;
+    flex-wrap: wrap;
+  }
+  .id {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    color: var(--muted);
+  }
+  .id b {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .blurb {
+    margin-top: 8px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--muted);
+    max-width: 34ch;
+  }
+  .group { flex: 1; min-width: 130px; }
+  .group h4 {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+  .group a {
+    display: block;
+    font-size: 14px;
+    color: var(--body);
+    text-decoration: none;
+    padding: 3px 0;
+  }
+  .group a:hover { color: var(--accent); }
+  .legal {
+    margin-top: 26px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border-soft);
+    font-size: 12.5px;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+</style>

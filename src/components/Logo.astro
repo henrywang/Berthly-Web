@@ -1,0 +1,27 @@
+---
+interface Props {
+  size?: number;
+}
+const { size = 26 } = Astro.props;
+const uid = Math.random().toString(36).slice(2, 8);
+---
+
+<svg width={size} height={size} viewBox="0 0 512 512" aria-hidden="true">
+  <defs>
+    <linearGradient id={`bg-${uid}`} x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3F82EC"></stop>
+      <stop offset="1" stop-color="#2361C7"></stop>
+    </linearGradient>
+    <clipPath id={`sq-${uid}`}><rect width="512" height="512" rx="116"></rect></clipPath>
+  </defs>
+  <g clip-path={`url(#sq-${uid})`}>
+    <rect width="512" height="512" fill={`url(#bg-${uid})`}></rect>
+    <rect x="-40" y="380" width="592" height="184" fill="#B9D4FB"></rect>
+    <rect x="-40" y="380" width="592" height="16" fill="#8FB6F0"></rect>
+    <path d="M162 246 Q256 202 350 246" stroke="#8FB6F0" stroke-width="44" stroke-linecap="round" fill="none"></path>
+    <rect x="150" y="104" width="212" height="76" rx="38" fill="#FFF"></rect>
+    <rect x="190" y="160" width="132" height="236" fill="#FFF"></rect>
+    <rect x="140" y="346" width="232" height="58" rx="16" fill="#FFF"></rect>
+    <path d="M162 246 Q256 298 350 246" stroke="#8FB6F0" stroke-width="44" stroke-linecap="round" fill="none"></path>
+  </g>
+</svg>

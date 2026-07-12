@@ -1,0 +1,60 @@
+<!-- @dsCard group="Brand" name="Color palette" subtitle="Brand blues, rope/water tints, light & dark surfaces" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Berthly — Colors</title>
+<style>
+  * { margin:0; box-sizing:border-box; }
+  body {
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Inter,sans-serif;
+    background:#fff; color:#0E1B2C; padding:32px;
+  }
+  h2 { font-size:13px; font-weight:600; text-transform:uppercase; letter-spacing:.08em; color:#51637C; margin:28px 0 12px; }
+  h2:first-child { margin-top:0; }
+  .row { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+  .sw { border-radius:10px; overflow:hidden; border:1px solid #D9E6F9; }
+  .chip { height:72px; }
+  .meta { padding:8px 10px; background:#fff; }
+  .meta b { display:block; font-size:13px; }
+  .meta code { font-size:11.5px; color:#51637C; font-family:ui-monospace,"SF Mono",Menlo,monospace; }
+  .grad { background:linear-gradient(180deg,#3F82EC,#2361C7); }
+  .pair { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .surface { border-radius:10px; padding:16px; border:1px solid #D9E6F9; }
+  .surface h3 { font-size:15px; margin-bottom:4px; }
+  .surface p { font-size:13px; }
+  .surface .link { font-size:13px; font-weight:600; }
+</style>
+</head>
+<body>
+  <h2>Brand</h2>
+  <div class="row">
+    <div class="sw"><div class="chip" style="background:#2A6FDB"></div><div class="meta"><b>Brand blue</b><code>#2A6FDB</code></div></div>
+    <div class="sw"><div class="chip" style="background:#3F82EC"></div><div class="meta"><b>Bright</b><code>#3F82EC</code></div></div>
+    <div class="sw"><div class="chip" style="background:#2361C7"></div><div class="meta"><b>Deep</b><code>#2361C7</code></div></div>
+    <div class="sw"><div class="chip grad"></div><div class="meta"><b>Icon gradient</b><code>#3F82EC → #2361C7</code></div></div>
+  </div>
+
+  <h2>Tints — rope &amp; water</h2>
+  <div class="row">
+    <div class="sw"><div class="chip" style="background:#8FB6F0"></div><div class="meta"><b>Rope</b><code>#8FB6F0</code></div></div>
+    <div class="sw"><div class="chip" style="background:#B9D4FB"></div><div class="meta"><b>Water</b><code>#B9D4FB</code></div></div>
+    <div class="sw"><div class="chip" style="background:#EFF5FE"></div><div class="meta"><b>Wash (section bg)</b><code>#EFF5FE</code></div></div>
+    <div class="sw"><div class="chip" style="background:#D9E6F9"></div><div class="meta"><b>Border</b><code>#D9E6F9</code></div></div>
+  </div>
+
+  <h2>Light / dark surfaces</h2>
+  <div class="pair">
+    <div class="surface" style="background:#fff">
+      <h3 style="color:#0E1B2C">Light</h3>
+      <p style="color:#51637C">Body text #51637C on #FFFFFF, ink #0E1B2C.</p>
+      <span class="link" style="color:#2A6FDB">Links &amp; accents #2A6FDB</span>
+    </div>
+    <div class="surface" style="background:#0B1526; border-color:#1D2E4A">
+      <h3 style="color:#E8F0FB">Dark</h3>
+      <p style="color:#9DB2CE">Body text #9DB2CE on navy #0B1526, panels #0F1B30, ink #E8F0FB.</p>
+      <span class="link" style="color:#8FB6F0">Links &amp; accents shift to rope #8FB6F0</span>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!-- @dsCard group="Home sections" name="Privacy band" subtitle="Dark navy section — the differentiator" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Berthly — Privacy band</title>
+<style>
+  * { margin:0; box-sizing:border-box; }
+  body {
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Inter,sans-serif;
+    background:#0B1526; color:#E8F0FB; padding:64px 40px;
+  }
+  .wrap { max-width:900px; margin:0 auto; text-align:center; }
+  .caption { font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:.08em; color:#8FB6F0; }
+  h2 { font-size:36px; font-weight:750; letter-spacing:-.02em; margin:10px 0 12px; }
+  .lede { font-size:17px; line-height:1.65; color:#9DB2CE; max-width:54ch; margin:0 auto 36px; }
+  .points { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; text-align:left; }
+  .pt { background:#0F1B30; border:1px solid #1D2E4A; border-radius:14px; padding:18px; }
+  .pt .ico { color:#8FB6F0; margin-bottom:10px; }
+  .pt h3 { font-size:15px; font-weight:650; margin-bottom:6px; }
+  .pt p { font-size:13.5px; line-height:1.55; color:#9DB2CE; }
+  .note { margin-top:26px; font-size:13.5px; color:#51637C; }
+  .note a { color:#8FB6F0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="caption">Privacy</div>
+  <h2>Everything stays on your Mac</h2>
+  <p class="lede">Berthly is a local tool, and it behaves like one. It talks only to the local <span style="font-family:ui-monospace,'SF Mono',Menlo,monospace">container</span> daemon over XPC — no telemetry, no analytics, no calls home.</p>
+  <div class="points">
+    <div class="pt">
+      <div class="ico"><svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1l6 3v4c0 3.6-2.5 6.2-6 7-3.5-.8-6-3.4-6-7V4z"/><path d="M5.5 8l1.8 1.8L10.8 6.3" stroke="#0F1B30" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg></div>
+      <h3>No telemetry</h3>
+      <p>No analytics, no crash reporting, no calls home. The only network traffic is your own image pulls and pushes.</p>
+    </div>
+    <div class="pt">
+      <div class="ico"><svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor"><rect x="3" y="7" width="10" height="7" rx="1.5"/><path d="M5 7V5a3 3 0 0 1 6 0v2" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></div>
+      <h3>Keychain-only credentials</h3>
+      <p>Registry sign-ins live in the same macOS Keychain items the CLI uses. Nowhere else, ever.</p>
+    </div>
+    <div class="pt">
+      <div class="ico"><svg width="20" height="20" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M5.5 4L2 8l3.5 4M10.5 4L14 8l-3.5 4"/></svg></div>
+      <h3>Open code</h3>
+      <p>Apache-2.0 on GitHub. Not sandboxed by necessity — so audit exactly what it does.</p>
+    </div>
+  </div>
+  <p class="note">Found a vulnerability? <a href="#">Report it privately →</a></p>
+</div>
+</body>
+</html>

@@ -1,0 +1,193 @@
+/* Berthly design tokens — mirrors design-system/ cards */
+:root {
+  --brand: #2a6fdb;
+  --bright: #3f82ec;
+  --deep: #2361c7;
+  --rope: #8fb6f0;
+  --water: #b9d4fb;
+
+  --bg: #ffffff;
+  --wash: #eff5fe;
+  --panel: #ffffff;
+  --ink: #0e1b2c;
+  --body: #33465e;
+  --muted: #51637c;
+  --border: #d9e6f9;
+  --border-soft: #e4edfb;
+  --accent: #2a6fdb;
+  --navy: #0b1526;
+  --navy-2: #0f1b30;
+  --navy-border: #1d2e4a;
+}
+
+[data-theme="dark"] {
+  --bg: #0b1526;
+  --wash: #0f1b30;
+  --panel: #0f1b30;
+  --ink: #e8f0fb;
+  --body: #c4d5ee;
+  --muted: #9db2ce;
+  --border: #1d2e4a;
+  --border-soft: #1d2e4a;
+  --accent: #8fb6f0;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0b1526;
+    --wash: #0f1b30;
+    --panel: #0f1b30;
+    --ink: #e8f0fb;
+    --body: #c4d5ee;
+    --muted: #9db2ce;
+    --border: #1d2e4a;
+    --border-soft: #1d2e4a;
+    --accent: #8fb6f0;
+  }
+}
+
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: light dark;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI",
+    Inter, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+code,
+pre,
+kbd {
+  font-family: ui-monospace, "SF Mono", Menlo, "JetBrains Mono", monospace;
+}
+
+a {
+  color: var(--accent);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.container {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding-inline: 24px;
+}
+
+.caption {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  border-radius: 10px;
+  padding: 11px 20px;
+  border: 1px solid transparent;
+  text-decoration: none;
+}
+
+.btn.lg {
+  font-size: 16px;
+  padding: 14px 26px;
+  border-radius: 12px;
+}
+
+.btn-primary {
+  background: linear-gradient(180deg, var(--bright), var(--brand));
+  color: #fff;
+  box-shadow: 0 1px 2px rgba(35, 97, 199, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(180deg, #4e8def, #3578e3);
+}
+
+.btn-secondary {
+  background: var(--panel);
+  color: var(--accent);
+  border-color: var(--water);
+}
+
+.btn-secondary:hover {
+  background: var(--wash);
+}
+
+[data-theme="dark"] .btn-secondary {
+  background: rgba(143, 182, 240, 0.08);
+  border-color: #2e4368;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .btn-secondary {
+    background: rgba(143, 182, 240, 0.08);
+    border-color: #2e4368;
+  }
+}
+
+/* Shiki dual-theme switch (Astro emits --shiki-dark vars) */
+[data-theme="dark"] .astro-code,
+[data-theme="dark"] .astro-code span {
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg) !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .astro-code,
+  :root:not([data-theme="light"]) .astro-code span {
+    color: var(--shiki-dark) !important;
+    background-color: var(--shiki-dark-bg) !important;
+  }
+}
+
+/* Blog tag pills */
+.tag {
+  font-size: 11.5px;
+  font-weight: 650;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: 5px;
+  padding: 2.5px 8px;
+  text-decoration: none;
+}
+
+.tag-devlog { background: #eff5fe; color: #2361c7; }
+.tag-release { background: #e7f7ee; color: #177a45; }
+.tag-design { background: #f4eefc; color: #7a3fbf; }
+.tag-news { background: #fff4e3; color: #a96a0b; }
+
+[data-theme="dark"] .tag-devlog { background: #16263f; color: #8fb6f0; }
+[data-theme="dark"] .tag-release { background: #11301f; color: #5bd695; }
+[data-theme="dark"] .tag-design { background: #291d3a; color: #c9a2f0; }
+[data-theme="dark"] .tag-news { background: #33260e; color: #ecb15c; }
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .tag-devlog { background: #16263f; color: #8fb6f0; }
+  :root:not([data-theme="light"]) .tag-release { background: #11301f; color: #5bd695; }
+  :root:not([data-theme="light"]) .tag-design { background: #291d3a; color: #c9a2f0; }
+  :root:not([data-theme="light"]) .tag-news { background: #33260e; color: #ecb15c; }
+}

@@ -1,0 +1,47 @@
+---
+title: "FAQ"
+description: "How Berthly compares to Docker Desktop, what images it runs, and other common questions."
+order: 3
+---
+
+## How is Berthly different from Docker Desktop or OrbStack?
+
+Docker Desktop and OrbStack ship their own container runtime. Berthly doesn't — it's a native
+GUI for [Apple's `container`](https://github.com/apple/container), the runtime Apple builds
+and signs, which runs each Linux container in its own lightweight VM on Apple Silicon. If you
+want Apple's tooling but miss the Docker Desktop experience, that's exactly the gap Berthly
+fills. It's also free and open source (Apache-2.0) — no subscription, no license terms to
+check.
+
+## Does it run my existing Docker images?
+
+Yes — Apple's `container` works with standard OCI images. Pull from Docker Hub, GHCR, or any
+registry, and build from ordinary Dockerfiles. Your images don't know the difference.
+
+## Can I keep using the CLI alongside Berthly?
+
+Yes, fully. Berthly talks to the same local daemon over XPC that the `container` CLI does —
+same images, same containers, same networks, same Keychain credentials. Anything you create in
+one shows up in the other. For the exact command-by-command mapping, see
+[PARITY.md](https://github.com/henrywang/Berthly/blob/main/PARITY.md).
+
+## Does it work on Intel Macs?
+
+No. Apple's `container` requires Apple Silicon, so Berthly does too.
+
+## Does Berthly phone home?
+
+No telemetry, no analytics, no crash reporting. Network traffic is limited to what you can
+see: your own image pulls and pushes, the Sparkle update check against GitHub Releases (which
+you can disable in Settings), and — only when you use the guided install — downloading Apple's
+signed `container` installer.
+
+## Why isn't the app sandboxed?
+
+Berthly manages the container daemon (XPC, `launchctl`) and works with your local files for
+builds and volume mounts — capabilities the App Sandbox doesn't allow. The code is
+[open](https://github.com/henrywang/Berthly); audit exactly what it does.
+
+## What does Berthly cost?
+
+Nothing. It's open source under Apache-2.0.

@@ -1,0 +1,41 @@
+---
+title: "Keyboard shortcuts"
+description: "The full shortcut reference — and how to live in Berthly without touching the mouse."
+order: 4
+---
+
+## The essentials
+
+| Shortcut | Action |
+| --- | --- |
+| <kbd>⌘K</kbd> | Open the command palette — every action, searchable |
+| <kbd>⌘1</kbd>–<kbd>⌘6</kbd> | Switch sidebar sections: Compute, Volumes, Networks, Images, Registries, System |
+| <kbd>⌘⌥1</kbd> | Detail tab: Overview |
+| <kbd>⌘⌥2</kbd> | Detail tab: Logs |
+| <kbd>⌘⌥3</kbd> | Detail tab: Terminal |
+
+Beyond these, every action in Berthly has a menu item — and menu items have shortcuts, so
+anything you do often is learnable from the menu bar.
+
+{/* TODO: add the full menu shortcut list (run/build/pull, stop, delete, pin, etc.) — verify
+    against the app before publishing. */}
+
+## Living in Berthly keyboard-only
+
+The palette isn't a shortcut list — it's the fastest way to *do* things. A complete
+pull-to-shell workflow, no mouse involved:
+
+1. <kbd>⌘K</kbd>, type **pull** — pull the image you need.
+2. <kbd>⌘K</kbd>, type **run** — create and start a container from it.
+3. <kbd>⌘⌥2</kbd> — watch the logs stream as it boots.
+4. <kbd>⌘⌥3</kbd> — drop into a real shell inside the container.
+5. <kbd>⌘K</kbd>, type the container's name — stop, start, or delete it from anywhere.
+
+The palette matches on both actions and resources, so typing a container or machine name
+surfaces its lifecycle actions directly — no need to navigate to it first.
+
+## Working with the terminal
+
+The integrated terminal (built on SwiftTerm) is a real login shell in your container or
+machine. Standard terminal keys work as you'd expect; use <kbd>⌘⌥1</kbd> to hop back to
+Overview without leaving the keyboard.

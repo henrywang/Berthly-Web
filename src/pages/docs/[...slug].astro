@@ -1,0 +1,212 @@
+---
+import { getCollection, render } from "astro:content";
+import Base from "../../layouts/Base.astro";
+
+export async function getStaticPaths() {
+  const docs = await getCollection("docs");
+  return docs.map((doc) => ({ params: { slug: doc.id }, props: { doc } }));
+}
+
+const { doc } = Astro.props;
+const { Content } = await render(doc);
+const all = (await getCollection("docs")).sort((a, b) => a.data.order - b.data.order);
+
+const idx = all.findIndex((d) => d.id === doc.id);
+const prev = idx > 0 ? all[idx - 1] : null;
+const next = idx < all.length - 1 ? all[idx + 1] : null;
+---
+
+<Base title={`${doc.data.title} — Berthly docs`} description={doc.data.description}>
+  <div class="container layout">
+    <aside>
+      <div class="caption">Docs</div>
+      <nav>
+        {
+          all.map((d) => (
+            <a href={`/docs/${d.id}/`} class:list={{ active: d.id === doc.id }}>
+              {d.data.title}
+            </a>
+          ))
+        }
+      </nav>
+      <div class="aside-foot">
+        <a href="https://github.com/henrywang/Berthly/issues">Report an issue →</a>
+      </div>
+    </aside>
+    <article>
+      <h1>{doc.data.title}</h1>
+      <p class="lede">{doc.data.description}</p>
+      <div class="prose">
+        <Content />
+      </div>
+      <div class="pager">
+        {prev ? <a class="p" href={`/docs/${prev.id}/`}>← {prev.data.title}</a> : <span />}
+        {next ? <a class="n" href={`/docs/${next.id}/`}>{next.data.title} →</a> : <span />}
+      </div>
+    </article>
+  </div>
+</Base>
+
+<style>
+  .layout {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 56px;
+    padding-block: 48px;
+    align-items: start;
+  }
+  aside {
+    position: sticky;
+    top: 88px;
+  }
+  aside nav {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-top: 12px;
+  }
+  aside nav a {
+    font-size: 14.5px;
+    font-weight: 500;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 7px 12px;
+    border-radius: 8px;
+    border-left: 2px solid transparent;
+  }
+  aside nav a:hover { color: var(--accent); background: var(--wash); }
+  aside nav a.active {
+    color: var(--accent);
+    font-weight: 650;
+    background: var(--wash);
+  }
+  .aside-foot { margin-top: 24px; padding-left: 12px; }
+  .aside-foot a { font-size: 13px; color: var(--muted); text-decoration: none; }
+  .aside-foot a:hover { color: var(--accent); }
+
+  article { max-width: 68ch; min-width: 0; }
+  h1 {
+    font-size: clamp(28px, 4.5vw, 34px);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin-bottom: 10px;
+  }
+  .lede {
+    font-size: 16.5px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 28px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border-soft);
+  }
+
+  .prose :global(p) {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--body);
+    margin: 0 0 18px;
+  }
+  .prose :global(h2) {
+    font-size: 21px;
+    font-weight: 700;
+    letter-spacing: -0.012em;
+    margin: 32px 0 12px;
+  }
+  .prose :global(h3) {
+    font-size: 17px;
+    font-weight: 650;
+    margin: 24px 0 10px;
+  }
+  .prose :global(a) {
+    color: var(--accent);
+    text-decoration: underline;
+    text-decoration-color: var(--water);
+    text-underline-offset: 3px;
+  }
+  .prose :global(code:not(.astro-code code)) {
+    font-size: 14.5px;
+    background: var(--wash);
+    border: 1px solid var(--border-soft);
+    border-radius: 6px;
+    padding: 1px 6px;
+    color: var(--accent);
+  }
+  .prose :global(kbd) {
+    font-size: 13px;
+    background: var(--wash);
+    border: 1px solid var(--border);
+    border-bottom-width: 2px;
+    border-radius: 6px;
+    padding: 1px 6px;
+  }
+  .prose :global(.astro-code) {
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin: 0 0 18px;
+    font-size: 13.5px;
+    line-height: 1.65;
+  }
+  .prose :global(ul),
+  .prose :global(ol) {
+    padding-left: 24px;
+    margin: 0 0 18px;
+    color: var(--body);
+    font-size: 16px;
+    line-height: 1.7;
+  }
+  .prose :global(li) { margin-bottom: 6px; }
+  .prose :global(blockquote) {
+    border-left: 3px solid var(--water);
+    padding: 2px 0 2px 16px;
+    margin: 0 0 18px;
+  }
+  .prose :global(blockquote p) {
+    color: var(--muted);
+    font-size: 15.5px;
+    margin: 0;
+  }
+  .prose :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 0 18px;
+    font-size: 15px;
+  }
+  .prose :global(th) {
+    text-align: left;
+    font-size: 12.5px;
+    font-weight: 650;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    border-bottom: 1px solid var(--border);
+    padding: 8px 12px 8px 0;
+  }
+  .prose :global(td) {
+    border-bottom: 1px solid var(--border-soft);
+    padding: 9px 12px 9px 0;
+    color: var(--body);
+  }
+
+  .pager {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 44px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-soft);
+  }
+  .pager a {
+    font-size: 14.5px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  @media (max-width: 800px) {
+    .layout { grid-template-columns: 1fr; gap: 24px; }
+    aside { position: static; }
+    aside nav { flex-direction: row; flex-wrap: wrap; gap: 6px; }
+    aside nav a { border: 1px solid var(--border-soft); }
+    .aside-foot { display: none; }
+  }
+</style>

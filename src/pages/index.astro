@@ -1,7 +1,10 @@
 ---
 import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
 import Base from "../layouts/Base.astro";
-import AppWindowMock from "../components/AppWindowMock.astro";
+import mainWindow from "../assets/screenshots/main-window.png";
+import commandPalette from "../assets/screenshots/command-palette.png";
+import detailPane from "../assets/screenshots/detail-pane.png";
 
 const posts = (await getCollection("blog"))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
@@ -30,6 +33,7 @@ const jsonLd = {
   offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
   url: "https://berthly.net",
   downloadUrl: "https://github.com/henrywang/Berthly/releases/latest",
+  softwareVersion: "1.0.1",
   description:
     "A native macOS GUI for Apple's container tool — build images, run containers and machines, manage networks and volumes, and tail logs.",
 };
@@ -42,7 +46,9 @@ const jsonLd = {
 >
   <section class="hero">
     <div class="container">
-      <span class="badge"><span class="dot"></span>Free &amp; open source · Apache-2.0</span>
+      <a class="badge" href="/blog/berthly-1-0-1/"
+        ><span class="dot"></span>Berthly v1.0.1 is out · Free &amp; open source</a
+      >
       <h1>Apple's container,<br />finally with a <span class="accent">face.</span></h1>
       <p class="sub">
         Berthly is a native macOS app for Apple's <code>container</code> tool — build images, run
@@ -57,7 +63,15 @@ const jsonLd = {
         <a class="btn lg btn-secondary" href="https://github.com/henrywang/Berthly">View on GitHub</a>
       </div>
       <p class="fine">Apple Silicon · macOS 26 or later · works with Apple's <b>container</b> daemon</p>
-      <AppWindowMock />
+      <figure class="hero-shot">
+        <Image
+          src={mainWindow}
+          alt="Berthly's main window: the Compute list with a container's live CPU, memory, and network charts"
+          widths={[760, 1140, 1640, 2624]}
+          sizes="(max-width: 1080px) 100vw, 1032px"
+          loading="eager"
+        />
+      </figure>
     </div>
   </section>
 
@@ -69,6 +83,54 @@ const jsonLd = {
         as a command-line tool. <b>Berthly is the GUI it's missing</b>: the Docker Desktop-style
         experience, driving the same daemon underneath.
       </p>
+    </div>
+  </section>
+
+  <section class="tour">
+    <div class="container">
+      <div class="row">
+        <div class="copy">
+          <div class="caption">Command palette</div>
+          <h3>⌘K, and you're there</h3>
+          <p>
+            Every action — run a container, start a machine, pull an image — is a keystroke away.
+            Berthly is keyboard-first throughout: <kbd>⌘K</kbd> opens the palette,
+            <kbd>⌘1–6</kbd> switch sections, <kbd>⌘⌥1–3</kbd> jump between a container's
+            Overview, Logs, and Terminal.
+          </p>
+          <p class="more">
+            <a href="/docs/shortcuts/">See all keyboard shortcuts →</a>
+          </p>
+        </div>
+        <figure>
+          <Image
+            src={commandPalette}
+            alt="The command palette (⌘K) matching lifecycle actions for a container"
+            widths={[640, 960, 1440]}
+            sizes="(max-width: 860px) 100vw, 620px"
+          />
+        </figure>
+      </div>
+      <div class="row flip">
+        <div class="copy">
+          <div class="caption">Live monitoring</div>
+          <h3>Watch without watching</h3>
+          <p>
+            Live CPU, memory, and network charts for every container — something the CLI simply
+            can't show you. Pin your favorites to the menu bar and get a notification when one
+            changes state while you're elsewhere.
+          </p>
+          <p class="more">Inspect status, ports, mounts, networks, and environment at a glance.</p>
+        </div>
+        <figure class="framed">
+          <Image
+            src={detailPane}
+            alt="A container's detail view: live CPU, memory, and network charts above the inspect table"
+            widths={[640, 960, 1290]}
+            sizes="(max-width: 860px) 100vw, 560px"
+          />
+        </figure>
+      </div>
     </div>
   </section>
 
@@ -90,6 +152,41 @@ const jsonLd = {
           ))
         }
       </div>
+    </div>
+  </section>
+
+  <section class="start" id="get-started">
+    <div class="container center">
+      <div class="caption">Get started</div>
+      <h2>Running in 30 seconds</h2>
+      <div class="steps">
+        <div class="step">
+          <span class="num">1</span>
+          <h3>Download the DMG</h3>
+          <p>
+            Grab <code>Berthly-1.0.1.dmg</code> from the
+            <a href="https://github.com/henrywang/Berthly/releases/latest">latest release</a>.
+            It's Developer ID–signed and notarized by Apple — no warnings, no workarounds.
+          </p>
+        </div>
+        <div class="step">
+          <span class="num">2</span>
+          <h3>Drag to Applications</h3>
+          <p>
+            Open the DMG and drag <b>Berthly.app</b> into Applications. Updates arrive in-app
+            from then on — Berthly&nbsp;→&nbsp;Check for Updates.
+          </p>
+        </div>
+        <div class="step">
+          <span class="num">3</span>
+          <h3>Launch — that's it</h3>
+          <p>
+            No daemon yet? Berthly installs Apple's signed <code>container</code> toolchain and
+            starts and monitors the daemon for you.
+          </p>
+        </div>
+      </div>
+      <p class="note"><a href="/docs/getting-started/">Read the full getting-started guide →</a></p>
     </div>
   </section>
 
@@ -172,7 +269,9 @@ const jsonLd = {
     border-radius: 999px;
     padding: 5px 14px;
     margin-bottom: 22px;
+    text-decoration: none;
   }
+  .badge:hover { border-color: var(--accent); }
   :global([data-theme="dark"]) .badge { border-color: #2e4368; }
   .badge .dot { width: 7px; height: 7px; border-radius: 50%; background: #2ecc71; }
   h1 {
@@ -199,6 +298,16 @@ const jsonLd = {
   .ctas { display: flex; justify-content: center; gap: 14px; margin-top: 30px; flex-wrap: wrap; }
   .fine { font-size: 13.5px; color: var(--muted); margin-top: 14px; }
 
+  .hero-shot {
+    max-width: 1032px;
+    margin: 40px auto 0;
+  }
+  .hero-shot img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
   .strip { padding: 48px 0; border-bottom: 1px solid var(--border-soft); }
   .strip p {
     font-size: 18px;
@@ -208,6 +317,82 @@ const jsonLd = {
     margin: 0 auto;
     text-align: center;
   }
+
+  .tour { padding-bottom: 24px; }
+  .tour .row {
+    display: grid;
+    grid-template-columns: 5fr 7fr;
+    gap: 56px;
+    align-items: center;
+  }
+  .tour .row + .row { margin-top: 72px; }
+  .tour .row.flip .copy { order: 2; }
+  .tour .row.flip figure { order: 1; }
+  .tour h3 {
+    font-size: 27px;
+    font-weight: 750;
+    letter-spacing: -0.018em;
+    margin: 10px 0 12px;
+  }
+  .tour .copy p {
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--body);
+  }
+  .tour .copy .more { margin-top: 12px; font-size: 14.5px; color: var(--muted); }
+  .tour .copy .more a { font-weight: 600; text-decoration: none; }
+  .tour kbd {
+    font-size: 13.5px;
+    background: var(--wash);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1px 6px;
+  }
+  .tour figure { margin: 0; }
+  .tour figure img { width: 100%; height: auto; display: block; }
+  .tour figure.framed img {
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    box-shadow: 0 20px 48px -20px rgba(11, 21, 38, 0.45);
+  }
+  @media (max-width: 860px) {
+    .tour .row { grid-template-columns: 1fr; gap: 28px; }
+    .tour .row.flip .copy { order: 1; }
+    .tour .row.flip figure { order: 2; }
+  }
+
+  .start { background: var(--wash); }
+  .start h2 { margin: 10px 0 32px; }
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    text-align: left;
+  }
+  .step {
+    background: var(--panel);
+    border: 1px solid var(--border-soft);
+    border-radius: 14px;
+    padding: 22px 20px;
+  }
+  .step .num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: linear-gradient(180deg, var(--bright), var(--brand));
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .step h3 { font-size: 16.5px; font-weight: 700; margin-bottom: 8px; }
+  .step p { font-size: 14px; line-height: 1.6; color: var(--muted); }
+  .start .note { margin-top: 28px; font-size: 14.5px; }
+  .start .note a { font-weight: 600; text-decoration: none; }
+  @media (max-width: 760px) { .steps { grid-template-columns: 1fr; } }
 
   .features h2 { text-align: center; margin: 10px 0 8px; }
   .features .lede {

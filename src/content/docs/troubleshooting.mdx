@@ -1,0 +1,42 @@
+---
+title: "Troubleshooting"
+description: "Fixes for common install and runtime issues."
+order: 2
+---
+
+## "Berthly.app is damaged and can't be opened"
+
+You most likely have **v1.0**, extracted its zip with `unzip` in a terminal. The zip encoding
+couldn't survive that path and the app's code signature was corrupted (details in the
+[1.0.1 release notes](https://github.com/henrywang/Berthly/releases/tag/v1.0.1)).
+
+**Fix:** delete the damaged app and download the current release — since v1.0.1 Berthly ships
+as a **DMG**, which doesn't have this problem. Open the DMG and drag Berthly.app to
+Applications.
+
+## The container daemon won't start
+
+- Open the **System** section in the sidebar — it shows the daemon state and lets you start,
+  stop, and restart it.
+- If the toolchain isn't installed at all, Berthly offers a guided install of Apple's signed
+  `container` package.
+- Check the basics: you need an **Apple Silicon** Mac on **macOS 26 or later**. From a
+  terminal, `container system status` shows the same state the CLI sees.
+
+## An image pull fails with an authentication error
+
+Private registries need a sign-in first: go to **Registries** in the sidebar and add the host.
+Credentials are stored in your macOS Keychain — the very same items
+`container registry login` creates, so signing in via either the GUI or the CLI covers both.
+
+## Berthly doesn't appear to update
+
+In-app updates are fetched from GitHub Releases (via Sparkle). If you disabled update checks
+in Settings, either re-enable them or download the latest DMG manually from
+[Releases](https://github.com/henrywang/Berthly/releases/latest).
+
+## Something else?
+
+Check the [open issues](https://github.com/henrywang/Berthly/issues) — or file a new one with
+your macOS version, Berthly version, and what you saw. For security problems, please
+[report privately](https://github.com/henrywang/Berthly/blob/main/SECURITY.md) instead.

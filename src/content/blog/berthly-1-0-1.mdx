@@ -1,0 +1,41 @@
+---
+title: "Berthly 1.0.1: now shipping as a DMG"
+description: "A quick follow-up release that fixes the “Berthly.app is damaged” error some v1.0 users hit, by switching distribution from zip to DMG."
+date: 2026-07-17
+tags: [release]
+---
+
+Two days after 1.0, here's 1.0.1 — a small release with one important fix.
+
+## The fix
+
+Some v1.0 users saw macOS report **"Berthly.app is damaged and can't be opened"** after
+downloading. The trigger: extracting the release zip with `unzip` in a terminal instead of
+double-clicking it in Finder.
+
+The short version of why: macOS attaches extended attributes to app bundles, and zip archives
+can't store them natively. Finder's Archive Utility reconstructs them correctly on extraction,
+but plain `unzip` doesn't — it drops literal `._*` files into the bundle, which corrupts the
+code signature of the Sparkle updater nested inside. macOS then refuses to open the app.
+
+Rather than working around it, 1.0.1 sidesteps the whole failure class: **Berthly now ships as
+a `.dmg`**. A DMG is a real filesystem image, so extended attributes live on it natively — there
+is no encoding step to get wrong, and no wrong way to open it. The same DMG also serves as the
+in-app update package, so auto-updates are covered by the same artifact.
+
+## Getting it
+
+- **On v1.0?** Use **Berthly → Check for Updates…**, or download the DMG fresh from
+  [the release page](https://github.com/henrywang/Berthly/releases/tag/v1.0.1).
+- **New to Berthly?** [Download Berthly-1.0.1.dmg](https://github.com/henrywang/Berthly/releases/latest),
+  open it, and drag **Berthly.app** into Applications. It's Developer ID–signed and notarized,
+  so it opens without warnings.
+
+## Also in this release
+
+Every release now runs a smoke check against the *installed*, notarized app — code signing,
+Gatekeeper acceptance, and the update feed — exactly the surface our UI and end-to-end test
+suites can't reach, and exactly how the v1.0 issue slipped through. The full test gate for this
+release: 417 unit tests, 42 UI tests, and 13 real-daemon end-to-end journeys.
+
+Full details in the [release notes](https://github.com/henrywang/Berthly/releases/tag/v1.0.1).

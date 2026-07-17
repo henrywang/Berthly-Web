@@ -1,0 +1,51 @@
+---
+title: "Getting started"
+description: "Install Berthly, set up Apple's container daemon, and run your first container."
+order: 1
+---
+
+## Requirements
+
+- **An Apple Silicon Mac.** Apple's `container` runs Linux containers in lightweight VMs and
+  requires Apple Silicon — Intel Macs are not supported.
+- **macOS 26 or later.**
+- **[Apple's `container`](https://github.com/apple/container) daemon** — but you don't need to
+  install it first. Berthly can do that for you (see below).
+
+## Install Berthly
+
+1. Download the latest `Berthly-<version>.dmg` from
+   [Releases](https://github.com/henrywang/Berthly/releases/latest).
+2. Open the DMG and drag **Berthly.app** into **Applications**.
+3. Launch Berthly.
+
+The app is Developer ID–signed and notarized by Apple, so it opens without warnings.
+Updates arrive in-app afterwards — **Berthly → Check for Updates…**
+
+> Running v1.0? Update to v1.0.1 or later — the v1.0 zip had a packaging flaw. See
+> [Troubleshooting](/docs/troubleshooting/) if you hit *"Berthly.app is damaged"*.
+
+## First launch: the daemon
+
+Berthly is a GUI for Apple's `container` daemon. On first launch:
+
+- **If the daemon isn't installed**, Berthly offers a guided install of Apple's signed
+  `container` toolchain — no terminal needed.
+- **If the daemon is installed but stopped**, Berthly starts it and monitors it for you. The
+  status is always visible at the bottom of the sidebar.
+
+Already use the CLI? Nothing changes: Berthly drives the same daemon over XPC — same images,
+same containers, same Keychain credentials. Use the GUI and `container` commands
+interchangeably.
+
+## Run your first container
+
+1. Press <kbd>⌘K</kbd> and type **run** — or click **Run** in the toolbar.
+2. Pick an image (pull one from a registry if the library is empty), set a name and ports if
+   you need them, and hit Run.
+3. Select the container in the Compute list to watch live CPU, memory, and network charts —
+   or jump to its **Logs** and **Terminal** tabs with <kbd>⌘⌥2</kbd> and <kbd>⌘⌥3</kbd>.
+
+From here, explore the sidebar: **Compute**, **Volumes**, **Networks**, **Images**,
+**Registries**, and **System** — or read the [keyboard shortcuts](/docs/shortcuts/) to move
+around without the mouse.

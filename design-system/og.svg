@@ -18,11 +18,13 @@
     <g transform="translate(96,215) scale(0.390625)">
       <rect x="-40" y="380" width="592" height="184" fill="#B9D4FB"/>
       <rect x="-40" y="380" width="592" height="16" fill="#8FB6F0"/>
+      <path d="M-40 76 Q104 150 162 246" stroke="#8FB6F0" stroke-width="44" stroke-linecap="round" fill="none"/>
       <path d="M162 246 Q256 202 350 246" stroke="#8FB6F0" stroke-width="44" stroke-linecap="round" fill="none"/>
       <rect x="150" y="104" width="212" height="76" rx="38" fill="#FFFFFF"/>
       <rect x="190" y="160" width="132" height="236" fill="#FFFFFF"/>
       <rect x="140" y="346" width="232" height="58" rx="16" fill="#FFFFFF"/>
       <path d="M162 246 Q256 298 350 246" stroke="#8FB6F0" stroke-width="44" stroke-linecap="round" fill="none"/>
+      <path d="M350 246 Q396 300 390 368" stroke="#8FB6F0" stroke-width="44" stroke-linecap="round" fill="none"/>
     </g>
   </g>
   <text x="344" y="298" font-family="Helvetica Neue, Helvetica, Arial" font-size="86" font-weight="bold" fill="#E8F0FB" letter-spacing="-1.5">Berthly</text>

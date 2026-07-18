@@ -33,4 +33,8 @@ Push to `main` and Vercel deploys it. RSS, sitemap, tag pages, and the home-page
 
 `design-system/` holds the HTML design cards (also synced to the "Berthly Web" project on
 claude.ai/design) and `og.svg`, the source for the social-preview image. Icons come from the
-app repo at `Berthly/design/icon`. The overall design and build plan is in [PLAN.md](PLAN.md).
+app repo at `Berthly/design/icon`.
+
+## License
+
+Apache-2.0, see [LICENSE](LICENSE).

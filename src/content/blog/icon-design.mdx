@@ -1,0 +1,128 @@
+---
+title: "Made fast: designing the Berthly icon"
+description: "How Berthly's app icon went from a square that wasn't ours to a bollard that is — three directions, a detour through the menu bar, and the details that don't show."
+date: 2026-07-18
+tags: [design]
+---
+
+Every app needs a face. Berthly — a native macOS front-end for Apple's `container` — got its
+first one the fastest way there is: we asked Claude to draw it. What came back was clean,
+confident, and, we eventually admitted, not ours.
+
+This is the story of the redesign: three directions, an unplanned detour through the menu bar,
+and a mooring line that finally tied the whole thing to the name.
+
+<img src="/blog/icon-design/before.svg" alt="The original icon: a white rounded square inside a rounded square on brand blue" width="200" />
+
+## The icon Claude drew
+
+A white rounded square inside a rounded square, a small tint square at its heart, all on brand
+blue. It scaled cleanly and looked tidy at every size. It had two problems.
+
+The first you may already see: it is, almost line for line, the **Square** (now Block) logo — the
+last mark you want your container tool mistaken for. The second is quieter and worse. It says
+*nothing*. Berth, ship, dock, container — none of it survives in an abstract square. In a Dock
+beside Docker and OrbStack, both blue, there was nothing to grab.
+
+> An icon's daily job isn't to explain your app. It's to be *found*. You learn what an app does
+> once; you hunt for its shape a thousand times.
+
+Which is exactly why the icons on tools we love get away with a rubber duck for an SFTP client,
+or a planet for a container runtime. The picture doesn't have to be literal. It has to be *yours*.
+
+## A name worth drawing
+
+The fix started with the word. A **berth** is where a vessel ties up — the slip at the dock, the
+place a ship rests when the crossing's done. It's a lovely, specific name, and the old mark spent
+none of it.
+
+So the brief for round one was simple: keep the modern macOS squircle, the brand blue, the light
+tint. Put something on it that could only be Berthly.
+
+## Round one: three directions
+
+<div style="display:flex; gap:20px; flex-wrap:wrap; margin: 20px 0;">
+  <figure style="flex:1; min-width:140px; margin:0;">
+    <img src="/blog/icon-design/direction-stack.svg" alt="Direction A: The Stack — three container ends with corrugation implied" />
+    <figcaption style="font-size:13.5px; color:var(--muted); margin-top:8px;"><strong>A · The Stack</strong> — three container ends, corrugation implied. Says "containers" instantly and survives to 16px, but the berth pun lives only in the name.</figcaption>
+  </figure>
+  <figure style="flex:1; min-width:140px; margin:0;">
+    <img src="/blog/icon-design/direction-ship.svg" alt="Direction B: The Ship — a loaded vessel at the waterline" />
+    <figcaption style="font-size:13.5px; color:var(--muted); margin-top:8px;"><strong>B · The Ship</strong> — a loaded vessel at the waterline, the friendliest of the set. But "cargo on a hull" is Docker's sentence, whale or not.</figcaption>
+  </figure>
+  <figure style="flex:1; min-width:140px; margin:0;">
+    <img src="/blog/icon-design/direction-bollard.svg" alt="Direction C: The Bollard — the iron post a mooring line loops around" />
+    <figcaption style="font-size:13.5px; color:var(--muted); margin-top:8px;"><strong>C · The Bollard</strong> — the post a mooring line loops around, the thing a berth actually <em>is</em>. Truest to the name — and, it turned out, the most stubborn.</figcaption>
+  </figure>
+</div>
+
+We loved C. Nobody in container tooling owns a bollard, and its silhouette was the strongest of
+the three. We also couldn't ship it as drawn.
+
+## The detour we didn't plan
+
+At 512 pixels the bollard was a tall, narrow object marooned in a square of blue — big empty
+fields either side — and the rope we'd drawn to fill them read less like a mooring line and more
+like a scarf.
+
+Where C came alive was the last place we looked: the menu bar. Shrunk to eighteen pixels and one
+flat color, it no longer had to explain containers. It had to be an instantly findable shape — and
+a solid vertical post is exactly that.
+
+<img src="/blog/icon-design/menubar-compare.svg" alt="Menu bar comparison: the old square glyph next to the new bollard glyph, in both light and dark menu bars" style="max-width:360px;" />
+
+Against the old square, it wasn't close. So we split the system: the Dock icon could be
+pictorial and explanatory, and the menu-bar glyph its stripped-down sibling — two tellings of one
+object, never seen side by side. The bollard had already won half the job. Round two was about
+earning the other half.
+
+## Round two: making the bollard carry the Dock
+
+The problem was never the bollard. It was everything around it. Three ways to fill the canvas:
+
+<div style="display:flex; gap:20px; flex-wrap:wrap; margin: 20px 0;">
+  <figure style="flex:1; min-width:140px; margin:0;">
+    <img src="/blog/icon-design/round2-waterline.svg" alt="C2b: Waterline — a chunkier bollard with the harbor passing behind it" />
+    <figcaption style="font-size:13.5px; color:var(--muted); margin-top:8px;"><strong>Waterline</strong> — calm and symmetric, but a bollard rising straight out of open water is a small lie, and it fills the frame the least.</figcaption>
+  </figure>
+  <figure style="flex:1; min-width:140px; margin:0;">
+    <img src="/blog/icon-design/round2-closeup.svg" alt="C2c: Close-up — the bollard cropped full-bleed with one heavy coil" />
+    <figcaption style="font-size:13.5px; color:var(--muted); margin-top:8px;"><strong>Close-up</strong> — boldest in the Dock and clearest at 16px, but without a deck for context it can read as a push-pin at a glance.</figcaption>
+  </figure>
+  <figure style="flex:1; min-width:140px; margin:0;">
+    <img src="/berthly-icon-1024.png" alt="C2a: Made fast — a pier deck grounds the frame, with a taut mooring line arriving from an off-canvas ship" />
+    <figcaption style="font-size:13.5px; color:var(--muted); margin-top:8px;"><strong>Made fast</strong> — a pier deck grounds the frame, a taut line arrives from an off-canvas ship, in twice around and down. Shipped.</figcaption>
+  </figure>
+</div>
+
+The shipped version is the only one that's about the *berth*, not just the cargo. "Made fast" is
+the sailor's phrase for a line secured to a bollard — and that's the whole icon: something tied up,
+safe, *here*. It also happens to be the exact object already living in the menu bar. One mark,
+told twice.
+
+## The details that don't show
+
+Most of the work in an icon is invisible by design — you only notice when it's missing.
+
+**It's not a rounded rectangle.** Apple's icon silhouette is a *superellipse* — `|x|ⁿ + |y|ⁿ = 1`,
+n ≈ 5 — a continuous curve with no hard seam where the straight edge meets the corner. Up close
+it's the difference between "a Mac app" and "not quite."
+
+**There are two masters, not one.** The full drawing — deck, entering line, two coils — is
+gorgeous at 512px and mud at 16px. So the small sizes render from a second, simplified master: one
+heavy wrap, a stouter post, a fatter deck. Same icon, fewer words.
+
+**And there's always a pipeline.** With no SVG tooling on the machine, macOS offered two
+rasterizers, each broken in a complementary way — Quick Look honors the drop shadow but garbles
+anything under 512px, and Core SVG scales perfectly but drops filters entirely. The build routes
+shadowed masters through one and flat glyphs through the other. Every icon has a story like this;
+ours is just unusually petty.
+
+## Where it landed
+
+<img src="/berthly-icon-1024.png" alt="The final Berthly icon: a bollard on a pier deck with a mooring line made fast" width="180" />
+
+The mark that ships today is a bollard with a line made fast: the app, berthed. The Dock gets the
+full harbor scene; the menu bar gets the post alone. It took a wrong-looking square, three
+directions, and a detour to get there — but the icon finally says the one thing the old one
+couldn't. Its own name.

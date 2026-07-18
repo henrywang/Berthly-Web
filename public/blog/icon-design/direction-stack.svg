@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3F82EC"/><stop offset="1" stop-color="#2361C7"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="115" fill="url(#bgGrad)"/>
+  <rect x="181" y="156" width="150" height="94" rx="14" fill="#B9D4FB"/>
+  <rect x="214" y="176" width="10" height="54" rx="5" fill="#8FB6F0"/><rect x="251" y="176" width="10" height="54" rx="5" fill="#8FB6F0"/><rect x="288" y="176" width="10" height="54" rx="5" fill="#8FB6F0"/>
+  <rect x="101" y="262" width="150" height="94" rx="14" fill="#FFFFFF"/>
+  <rect x="134" y="282" width="10" height="54" rx="5" fill="#C9DCF8"/><rect x="171" y="282" width="10" height="54" rx="5" fill="#C9DCF8"/><rect x="208" y="282" width="10" height="54" rx="5" fill="#C9DCF8"/>
+  <rect x="261" y="262" width="150" height="94" rx="14" fill="#FFFFFF"/>
+  <rect x="294" y="282" width="10" height="54" rx="5" fill="#C9DCF8"/><rect x="331" y="282" width="10" height="54" rx="5" fill="#C9DCF8"/><rect x="368" y="282" width="10" height="54" rx="5" fill="#C9DCF8"/>
+</svg>

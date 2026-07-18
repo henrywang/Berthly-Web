@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://berthly.net/sitemap-index.xml

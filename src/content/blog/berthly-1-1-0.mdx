@@ -1,0 +1,57 @@
+---
+title: "Berthly 1.1.0: image-update badges, drag-and-drop builds, and a security pass"
+description: "A feature release: Watchtower-style recreate for stale images, drag-and-drop Dockerfile builds, and a round of security hardening on top of six days of fixes since 1.0.1."
+date: 2026-07-23
+tags: [release]
+---
+
+Six days after 1.0.1, Berthly 1.1.0 is out — the first release with real new capability on top
+of the CLI, plus a security hardening pass and a long list of fixes.
+
+## New features
+
+- **[Image updates, Watchtower-style](/blog/recreate-with-latest-image/)** — Berthly checks your
+  registries in the background and badges any image (or the containers running it) whose
+  registry digest has moved past your local copy. **Recreate with Latest Image** pulls the new
+  image and recreates the container with its configuration and volumes intact — the confirm sheet
+  is upfront that the writable layer is discarded.
+- **[Drag-and-drop builds](/blog/drag-drop-build/)** — drop a `Dockerfile` or `Containerfile`
+  from Finder onto the main window or sidebar to open the Build sheet pre-filled with the resolved
+  context and path.
+- **Push from the image row context menu** — right-click an image to push it, no need to open
+  `ImageDetailView` first.
+
+## Security hardening
+
+Installer packages are now verified as Apple-signed for both fresh installs and upgrades,
+privileged DNS execution is restricted to a trusted root-owned binary on a system-only `PATH`,
+build logs are bounded, builder event loops are cleaned up, timed-out pushes are serialized, and
+CID/app-state files are now owner-only and non-overwriting. Full details are in
+[the release notes](https://github.com/henrywang/Berthly/releases/tag/v1.1.0).
+
+## Fixes worth calling out
+
+- Insecure-registry sign-in on a non-standard HTTP port now mirrors `container registry login`'s
+  own host/port handling.
+- Deleting a network row via its context menu no longer crashes the app — an AppKit layout
+  reentrancy issue reproduced against a real daemon and fixed.
+- Builder/Image/Volume rows could silently stay stale after a daemon-side state change; every
+  model's `Equatable` conformance in `Core/Models.swift` was audited and widened.
+- Starting a stopped container while its Terminal tab was selected could freeze the row at half
+  height — the same bug [documented here](/blog/half-height-row/), now fixed at the source: focus
+  is deferred until the row's insert animation completes.
+
+## Getting it
+
+- **Already on Berthly?** Use **Berthly → Check for Updates…**.
+- **New to Berthly?** [Download Berthly-1.1.0.dmg](https://github.com/henrywang/Berthly/releases/latest),
+  open it, and drag **Berthly.app** into Applications. It's Developer ID–signed and notarized, so
+  it opens without warnings.
+
+## Testing
+
+This release shipped only after its gate run passed on the release commit: **497 unit tests**
+(90% line coverage of the pure logic layer), **72 UI tests** against a mock daemon, and
+**18 real-daemon end-to-end journeys**.
+
+Full details in the [release notes](https://github.com/henrywang/Berthly/releases/tag/v1.1.0).

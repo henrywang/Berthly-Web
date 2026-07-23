@@ -1,0 +1,343 @@
+---
+const demos = [
+  {
+    key: "dnd",
+    title: "Drag-and-drop builds",
+    body: "Drop a Dockerfile from Finder onto the window — the Build sheet opens already pointed at the right context and file.",
+  },
+  {
+    key: "rebuild",
+    title: "Rebuild in one click",
+    body: "Context and flags are remembered from the last build, so re-running one never means re-entering anything.",
+  },
+  {
+    key: "update",
+    title: "Image updates, Watchtower-style",
+    body: "Berthly checks your registries in the background and badges anything stale — recreate in one click, volumes untouched.",
+  },
+  {
+    key: "keys",
+    title: "Full keyboard operation",
+    body: "⌘K opens the palette, arrow keys move through it, Enter runs it — every action reachable without a mouse.",
+  },
+];
+---
+
+<section class="showcase" id="in-action">
+  <div class="container">
+    <div class="caption center">See it in action</div>
+    <h2>Built around the workflow, not just the commands</h2>
+    <div class="demo-grid">
+      {
+        demos.map((d) => (
+          <div class="demo-card">
+            <div class:list={["stage", d.key]} aria-hidden="true">
+              {d.key === "dnd" && (
+                <div class="mini-window">
+                  <div class="mini-header"><span /><span /><span /></div>
+                  <div class="mini-body">
+                    <div class="file-chip">Dockerfile</div>
+                    <div class="build-sheet">
+                      <div class="field"><span class="k">Context</span><span class="v">./app</span></div>
+                      <div class="field"><span class="k">Tag</span><span class="v">app:latest</span></div>
+                      <div class="mini-btn">Build</div>
+                    </div>
+                  </div>
+                </div>
+              )}
+              {d.key === "rebuild" && (
+                <div class="mini-window">
+                  <div class="mini-header"><span /><span /><span /></div>
+                  <div class="mini-row">
+                    <span class="row-dot" />
+                    <span class="row-name">web-app</span>
+                    <div class="mini-btn rebuild-btn">
+                      <span class="spinner" />
+                      <span class="check">✓</span>
+                      <span class="label">Rebuild</span>
+                    </div>
+                  </div>
+                </div>
+              )}
+              {d.key === "update" && (
+                <div class="mini-window">
+                  <div class="mini-header"><span /><span /><span /></div>
+                  <div class="mini-row">
+                    <span class="badge-dot" />
+                    <span class="row-name">postgres:16</span>
+                    <span class="update-pill">Update available</span>
+                  </div>
+                  <div class="mini-btn recreate-btn">Recreate with Latest Image</div>
+                </div>
+              )}
+              {d.key === "keys" && (
+                <div class="mini-window">
+                  <div class="mini-header"><span /><span /><span /></div>
+                  <div class="keycombo"><kbd>⌘</kbd><kbd>K</kbd></div>
+                  <div class="palette">
+                    <div class="item i1">Run container</div>
+                    <div class="item i2">Pull image</div>
+                    <div class="item i3">Build image</div>
+                  </div>
+                </div>
+              )}
+            </div>
+            <h3>{d.title}</h3>
+            <p>{d.body}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .showcase { padding: 72px 0; }
+  h2 { text-align: center; font-size: 32px; font-weight: 750; letter-spacing: -0.02em; margin: 10px 0 40px; }
+
+  .demo-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  @media (max-width: 760px) { .demo-grid { grid-template-columns: 1fr; } }
+
+  .demo-card {
+    border: 1px solid var(--border-soft);
+    border-radius: 16px;
+    padding: 18px 18px 20px;
+    background: var(--panel);
+  }
+  .demo-card h3 { font-size: 16px; font-weight: 700; margin: 14px 0 4px; }
+  .demo-card p { font-size: 13.5px; line-height: 1.55; color: var(--muted); }
+
+  .stage {
+    height: 168px;
+    border-radius: 10px;
+    background: var(--wash);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .mini-window {
+    width: 92%;
+    height: 84%;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    box-shadow: 0 10px 24px -12px rgba(11, 21, 38, 0.35);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+  }
+  .mini-header {
+    display: flex;
+    gap: 5px;
+    padding: 7px 9px;
+    border-bottom: 1px solid var(--border-soft);
+    flex-shrink: 0;
+  }
+  .mini-header span { width: 7px; height: 7px; border-radius: 50%; background: var(--border); }
+
+  .mini-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    font-weight: 650;
+    color: #fff;
+    background: linear-gradient(180deg, var(--bright), var(--brand));
+    border-radius: 6px;
+    padding: 4px 9px;
+    white-space: nowrap;
+  }
+
+  /* ---------- Drag and drop ---------- */
+  .mini-body { position: relative; flex: 1; padding: 10px 12px; }
+  .file-chip {
+    position: absolute;
+    top: -26px;
+    left: 14px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--accent);
+    background: var(--wash);
+    border: 1px solid var(--water);
+    border-radius: 6px;
+    padding: 3px 8px;
+    opacity: 0;
+    animation: dnd-chip 5s ease-in-out infinite;
+  }
+  .build-sheet {
+    position: absolute;
+    inset: 10px 12px;
+    background: var(--panel);
+    border: 1px solid var(--border-soft);
+    border-radius: 8px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: dnd-sheet 5s ease-in-out infinite;
+  }
+  .field { display: flex; justify-content: space-between; font-size: 10.5px; }
+  .field .k { color: var(--muted); }
+  .field .v { color: var(--ink); font-weight: 600; font-family: ui-monospace, monospace; }
+  .build-sheet .mini-btn { align-self: flex-end; margin-top: auto; }
+
+  @keyframes dnd-chip {
+    0%, 8% { opacity: 0; top: -26px; left: 14px; }
+    28% { opacity: 1; top: 38px; left: 46%; }
+    40%, 100% { opacity: 0; top: 38px; left: 46%; }
+  }
+  @keyframes dnd-sheet {
+    0%, 32% { opacity: 0; transform: translateY(10px); }
+    46%, 88% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(10px); }
+  }
+
+  /* ---------- Rebuild in one click ---------- */
+  .mini-row {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 12px;
+    font-size: 12px;
+  }
+  .row-dot { width: 7px; height: 7px; border-radius: 50%; background: #2ecc71; flex-shrink: 0; }
+  .row-name { font-weight: 600; color: var(--ink); flex: 1; }
+
+  .rebuild-btn { position: relative; width: 68px; justify-content: center; }
+  .rebuild-btn .label { animation: rebuild-label 5s ease-in-out infinite; }
+  .rebuild-btn .spinner {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.4);
+    border-top-color: #fff;
+    opacity: 0;
+    animation: rebuild-spin 5s linear infinite, rebuild-spin-visibility 5s ease-in-out infinite;
+  }
+  .rebuild-btn .check { opacity: 0; animation: rebuild-check 5s ease-in-out infinite; }
+
+  @keyframes rebuild-label {
+    0%, 18% { opacity: 1; }
+    22%, 78% { opacity: 0; position: absolute; }
+    82%, 100% { opacity: 1; }
+  }
+  @keyframes rebuild-spin { to { transform: rotate(360deg); } }
+  @keyframes rebuild-spin-visibility {
+    0%, 18% { opacity: 0; }
+    24%, 74% { opacity: 1; }
+    80%, 100% { opacity: 0; }
+  }
+  @keyframes rebuild-check {
+    0%, 74% { opacity: 0; transform: scale(0.6); }
+    80%, 96% { opacity: 1; transform: scale(1); }
+    100% { opacity: 0; transform: scale(0.6); }
+  }
+
+  /* ---------- Image update badge ---------- */
+  .update .mini-row { padding-top: 12px; }
+  .badge-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: #d97706;
+    flex-shrink: 0;
+    opacity: 0;
+    animation: badge-pop 5s ease-in-out infinite;
+  }
+  .update-pill {
+    font-size: 10.5px;
+    font-weight: 650;
+    color: #a96a0b;
+    background: #fff4e3;
+    border-radius: 5px;
+    padding: 2px 7px;
+    white-space: nowrap;
+    opacity: 0;
+    animation: pill-in 5s ease-in-out infinite;
+  }
+  :global([data-theme="dark"]) .update-pill { color: #ecb15c; background: #33260e; }
+  .recreate-btn {
+    margin: 10px 12px 0;
+    opacity: 0;
+    animation: pill-in 5s ease-in-out infinite;
+  }
+
+  @keyframes badge-pop {
+    0%, 20% { opacity: 0; transform: scale(0.4); }
+    30%, 92% { opacity: 1; transform: scale(1); }
+    100% { opacity: 0; transform: scale(0.4); }
+  }
+  @keyframes pill-in {
+    0%, 32% { opacity: 0; transform: translateY(4px); }
+    44%, 88% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(4px); }
+  }
+
+  /* ---------- Full keyboard operation ---------- */
+  .keycombo {
+    display: flex;
+    gap: 4px;
+    justify-content: center;
+    padding-top: 10px;
+    transform: scale(1);
+    animation: key-press 5s ease-in-out infinite;
+  }
+  .keycombo kbd {
+    font-size: 11px;
+    font-weight: 650;
+    background: var(--wash);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 3px 7px;
+  }
+  @keyframes key-press {
+    0%, 8% { transform: scale(1); }
+    12% { transform: scale(0.9); }
+    16%, 100% { transform: scale(1); }
+  }
+
+  .palette {
+    margin: 6px 14px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    opacity: 0;
+    transform: translateY(6px);
+    animation: palette-in 5s ease-in-out infinite;
+  }
+  .palette .item {
+    font-size: 10.5px;
+    line-height: 1.4;
+    color: var(--muted);
+    border-radius: 5px;
+    padding: 3px 8px;
+  }
+  .palette .i1 { animation: item-highlight 5s ease-in-out infinite; }
+  .palette .i2 { animation: item-highlight 5s ease-in-out infinite 0.5s; }
+  .palette .i3 { animation: item-highlight 5s ease-in-out infinite 1s; }
+
+  @keyframes palette-in {
+    0%, 20% { opacity: 0; transform: translateY(6px); }
+    32%, 88% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(6px); }
+  }
+  @keyframes item-highlight {
+    0%, 38%, 64%, 100% { background: transparent; color: var(--muted); }
+    44%, 58% { background: var(--wash); color: var(--accent); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .file-chip, .build-sheet, .rebuild-btn .spinner, .rebuild-btn .check, .rebuild-btn .label,
+    .badge-dot, .update-pill, .recreate-btn, .keycombo, .palette, .palette .item {
+      animation: none !important;
+    }
+    .build-sheet, .badge-dot, .update-pill, .recreate-btn, .palette { opacity: 1; transform: none; }
+    .file-chip, .rebuild-btn .spinner, .rebuild-btn .check { opacity: 0; }
+    .rebuild-btn .label { opacity: 1; position: static; }
+    .palette .item { background: transparent; color: var(--muted); }
+  }
+</style>

@@ -2,10 +2,11 @@
 import { getCollection } from "astro:content";
 import { Image } from "astro:assets";
 import Base from "../layouts/Base.astro";
-import Showcase from "../components/Showcase.astro";
 import mainWindow from "../assets/screenshots/main-window.png";
 import commandPalette from "../assets/screenshots/command-palette.png";
 import detailPane from "../assets/screenshots/detail-pane.png";
+import dragDropBuild from "../assets/screenshots/drag-drop-build.png";
+import recreateMenu from "../assets/screenshots/recreate-menu.png";
 
 const posts = (await getCollection("blog"))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
@@ -138,10 +139,55 @@ const jsonLd = {
           />
         </figure>
       </div>
+      <div class="row">
+        <div class="copy">
+          <div class="caption">Drag-and-drop builds</div>
+          <h3>Drag it in, and Berthly takes it from there</h3>
+          <p>
+            Drag a <code>Dockerfile</code> or <code>Containerfile</code> from Finder onto the
+            window or sidebar — Berthly resolves the context and path and opens the Build sheet
+            already pointed at them, ready to tag and run.
+          </p>
+          <p class="more">
+            Context and flags are remembered too, so re-running a build later never means
+            re-entering anything — right-click the image and Rebuild.
+            <a href="/blog/drag-drop-build/">Read how it handles symlinks and race conditions →</a>
+          </p>
+        </div>
+        <figure class="framed">
+          <Image
+            src={dragDropBuild}
+            alt="A Dockerfile mid-drag from Finder over Berthly's Compute view, with the 'Drop to build an image' overlay showing"
+            widths={[640, 960, 1440]}
+            sizes="(max-width: 860px) 100vw, 620px"
+          />
+        </figure>
+      </div>
+      <div class="row flip">
+        <div class="copy">
+          <div class="caption">Image updates, Watchtower-style</div>
+          <h3>Know when your images fall behind</h3>
+          <p>
+            Berthly checks your registries in the background and badges any image — or the
+            container running it — whose registry digest has moved past your local copy.
+            <b>Recreate with Latest Image</b> does the pull-stop-delete-create-start dance for
+            you, volumes untouched.
+          </p>
+          <p class="more">
+            <a href="/blog/recreate-with-latest-image/">Read how the update check works →</a>
+          </p>
+        </div>
+        <figure class="framed">
+          <Image
+            src={recreateMenu}
+            alt="The Compute list showing an update badge on the datastore row, and the Recreate with Latest Image context menu item open"
+            widths={[520, 780, 1010]}
+            sizes="(max-width: 860px) 100vw, 560px"
+          />
+        </figure>
+      </div>
     </div>
   </section>
-
-  <Showcase />
 
   <section class="features" id="features">
     <div class="container">

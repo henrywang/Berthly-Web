@@ -2,7 +2,6 @@
 import { getCollection } from "astro:content";
 import { Image } from "astro:assets";
 import Base from "../layouts/Base.astro";
-import mainWindow from "../assets/screenshots/main-window.png";
 import commandPalette from "../assets/screenshots/command-palette.png";
 import detailPane from "../assets/screenshots/detail-pane.png";
 import dragDropBuild from "../assets/screenshots/drag-drop-build.png";
@@ -72,14 +71,28 @@ const jsonLd = {
       </div>
       <p class="fine">Apple Silicon · macOS 26 or later · works with Apple's <b>container</b> daemon</p>
       <figure class="hero-shot">
-        <Image
-          src={mainWindow}
-          alt="Berthly's main window: the Compute list with a container's live CPU, memory, and network charts"
-          widths={[760, 1140, 1640, 2624]}
-          sizes="(max-width: 1080px) 100vw, 1032px"
-          loading="eager"
-        />
+        <video
+          id="hero-video"
+          poster="/video/berthly-demo-poster.jpg"
+          width="1200"
+          height="720"
+          muted
+          loop
+          playsinline
+          preload="auto"
+          aria-label="Berthly demo: opening the menu-bar monitor, inspecting a container's live CPU, memory and network charts, then dragging a Dockerfile from Finder to open a pre-filled Build sheet"
+        >
+          <source src="/video/berthly-demo.mp4" type="video/mp4" />
+        </video>
       </figure>
+      <script is:inline>
+        (function () {
+          var v = document.getElementById("hero-video");
+          if (v && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+            v.play().catch(function () {});
+          }
+        })();
+      </script>
     </div>
   </section>
 
@@ -357,7 +370,8 @@ const jsonLd = {
     max-width: 1032px;
     margin: 40px auto 0;
   }
-  .hero-shot img {
+  .hero-shot img,
+  .hero-shot video {
     width: 100%;
     height: auto;
     display: block;

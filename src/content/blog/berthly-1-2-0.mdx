@@ -1,0 +1,55 @@
+---
+title: "Berthly 1.2.0: kernel boot arguments, digest-verified kernels, and a round of daemon-startup fixes"
+description: "Catches up to apple/container 1.2.0 — kernel boot argument support, kernel archive digest verification — plus fixes for silently-discarded config, a false error on cancel, and stalled-looking startup."
+date: 2026-08-05
+tags: [release]
+---
+
+Thirteen days after 1.1.0, Berthly 1.2.0 is out — catching up to
+[apple/container 1.2.0](https://github.com/apple/container/releases/tag/1.2.0) and clearing out a
+batch of daemon-startup rough edges found along the way.
+
+## New capability
+
+- **Kernel boot arguments** — a new "Kernel boot arguments" field on the Run/Create sheet's
+  Security tab wires up container 1.2.0's `--kernel-arg` flag, for appending raw arguments to the
+  kernel command line (enabling BPF LSM, for example) — previously only reachable from the CLI.
+- **Kernel archive digest verification** — the Set Kernel sheet's Tar Archive section now has a
+  Digest field, required for remote kernel URLs and prefilled by "Use Recommended," matching
+  upstream's new requirement that a custom kernel URL ship with a paired sha256 digest.
+
+## Fixes worth calling out
+
+- **A decode failure no longer wipes your whole config.** container 1.2.0 tightened its kernel
+  config format — a `kernel.url` set without a digest (the shape anyone using a custom kernel URL
+  pre-1.2.0 already has) now fails to decode. Berthly used to treat any decode failure as "no
+  config file," silently resetting DNS settings, build defaults, and everything else in
+  `config.toml` back to stock. It now surfaces the failure instead of eating it.
+- **Cancelling a daemon start, install, or upgrade no longer shows a false "Connection Error."**
+  The retry/verify sequence under the hood couldn't previously tell "you hit Cancel" apart from
+  "this actually failed" — hitting Cancel mid-upgrade landed you on an error screen instead of
+  cleanly back where you started.
+- **"Start Container System" shows real progress now**, instead of a static "Starting…" for
+  however long the launch, health-check, and machine-service verification actually take (can run
+  well past a minute on an old daemon).
+- **Run Container and Create Machine sheets stream progress logs** during a first boot, instead of
+  a bare spinner while a kernel or init image fetches in the background.
+- Starting a container from its own detail pane could still leave the list row stuck at half
+  height — a second trigger for [the bug documented here](/blog/half-height-row/), fixed properly
+  this time by making the list re-measure row heights after the section-move animation, rather
+  than chasing the specific action that triggers it.
+
+## Getting it
+
+- **Already on Berthly?** Use **Berthly → Check for Updates…**.
+- **New to Berthly?** [Download Berthly-1.2.0.dmg](https://github.com/henrywang/Berthly/releases/latest),
+  open it, and drag **Berthly.app** into Applications. It's Developer ID–signed and notarized, so
+  it opens without warnings.
+
+## Testing
+
+This release shipped only after its gate run passed on the release commit: **506 unit tests**
+(90% line coverage of the pure logic layer), **76 UI tests** against a mock daemon, and
+**18 real-daemon end-to-end journeys**.
+
+Full details in the [release notes](https://github.com/henrywang/Berthly/releases/tag/v1.2.0).

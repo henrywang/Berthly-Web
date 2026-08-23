@@ -1,0 +1,48 @@
+---
+title: "Berthly 1.2.1: SSH-forwarded builds, running-container export, and Kubernetes cleanup safety"
+description: "Catches up to apple/container 1.2.1/1.2.2 — SSH agent forwarding for builds, filesystem export from running containers — plus Kubernetes containers no longer get swept up by Clean Up, and a fix for daemons silently stuck behind on patch updates."
+date: 2026-08-23
+tags: [release]
+---
+
+Eighteen days after 1.2.0, Berthly 1.2.1 is out — catching up to
+[apple/container 1.2.1](https://github.com/apple/container/releases/tag/1.2.1) and
+[1.2.2](https://github.com/apple/container/releases/tag/1.2.2), plus a couple of fixes found
+along the way.
+
+## New capability
+
+- **SSH agent forwarding for builds** — a new "Forward SSH agent" toggle on the Build sheet's
+  Advanced section wires up container 1.2.1's SSH forwarding, so a Dockerfile's
+  `RUN --mount=type=ssh` steps can reach private git dependencies through your local SSH agent
+  instead of failing or requiring a baked-in credential.
+- **Filesystem export from running containers** — Export Filesystem previously required a
+  stopped container; on a 1.2.1+ daemon it's now available while running too, matching upstream's
+  [apple/container#1630](https://github.com/apple/container/pull/1630).
+
+## Fixes worth calling out
+
+- **Kubernetes cluster containers no longer get swept up by Clean Up or Prune.** `container k8s
+  create` (new in 1.2.1) spins up its own infrastructure containers; Berthly now recognizes and
+  protects them the same way it already protects builder containers, and hides them from the
+  Compute list entirely — they're not something you manage directly through Berthly.
+- **The System page now tells you when `container` itself is behind.** Berthly's compatibility
+  check only ever cared about major.minor — a daemon on 1.2.0 read as "fully compatible" with a
+  Berthly built against 1.2.2, with zero indication a newer patch existed. The System page now
+  shows "Update available" with a one-click update for exactly this case, separate from the
+  existing (blocking) gate for a genuinely too-old daemon.
+
+## Getting it
+
+- **Already on Berthly?** Use **Berthly → Check for Updates…**.
+- **New to Berthly?** [Download Berthly-1.2.1.dmg](https://github.com/henrywang/Berthly/releases/latest),
+  open it, and drag **Berthly.app** into Applications. It's Developer ID–signed and notarized, so
+  it opens without warnings.
+
+## Testing
+
+This release shipped only after its gate run passed on the release commit: **523 unit tests**
+(90% line coverage of the pure logic layer), **77 UI tests** against a mock daemon, and
+**20 real-daemon end-to-end journeys**.
+
+Full details in the [release notes](https://github.com/henrywang/Berthly/releases/tag/v1.2.1).

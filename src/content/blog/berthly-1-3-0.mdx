@@ -1,0 +1,55 @@
+---
+title: "Berthly 1.3.0: keeping up with apple/container 1.3.0"
+description: "Tracks apple/container 1.3.0. container 1.3.0 dropped the 'auto' connection scheme and its local-registry detection — Berthly runs that check itself now, so plain-HTTP registries on localhost or a private network still work without the insecure toggle. Plus a tmpfs-with-options fix and tidier platform labels."
+date: 2026-09-03
+tags: [release]
+---
+
+Berthly 1.3.0 is out, catching up to
+[apple/container 1.3.0](https://github.com/apple/container/releases/tag/1.3.0). The vendored
+`apple/container` / `containerization` dependency moves to 1.3.0 / 0.41.0, and most of the work
+was keeping Berthly's behavior steady across one breaking upstream change.
+
+## Local registries still work without the insecure toggle
+
+container 1.3.0 [removed the `auto` connection scheme](https://github.com/apple/container/pull/2100)
+and the check behind it that decided whether a registry host was only reachable locally —
+`localhost`, an RFC 1918 private IP (10/8, 172.16/12, 192.168/16), or a name under your internal
+DNS domain. Without that check every registry connection defaults to HTTPS, and a plain-HTTP
+registry on your laptop or LAN becomes unreachable unless you explicitly allow insecure
+registries.
+
+Berthly runs that detection itself now. Pulling, pushing, recreating a container against a newer
+image, or signing in to a registry on a local or private host still resolves to HTTP with no
+"Allow insecure registry" toggle — same as before 1.3.0.
+
+One case does change: **Run** and **Machine → Create** against an image from an un-toggled
+internal registry now need "Allow insecure registry" turned on. That one setting also governs
+the init-image fetch that happens alongside your image, so it can't be decided per host. If
+you'd rather not flip it, pull the image first and then run it.
+
+## Smaller fixes that come along for free
+
+- **tmpfs mounts with options land at the right path.** container 1.3.0
+  [rewrote its tmpfs parsing](https://github.com/apple/container/pull/2103) — a Run-sheet entry
+  like `/scratch:rw` now mounts a tmpfs at `/scratch` with those options, instead of creating a
+  mount literally named `/scratch:rw`. Berthly verifies this end-to-end against a real 1.3.0
+  daemon.
+- **arm64 platform labels drop the redundant `/v8`.** containerization 0.41.0 renders an arm64
+  platform as `linux/arm64`, matching how Docker and containerd show it; Berthly's
+  build-platform display follows.
+
+## Getting it
+
+- **Already on Berthly?** Use **Berthly → Check for Updates…**.
+- **New to Berthly?** [Download Berthly-1.3.0.dmg](https://github.com/henrywang/Berthly/releases/latest),
+  open it, and drag **Berthly.app** into Applications. It's Developer ID–signed and notarized, so
+  it opens without warnings.
+
+## Testing
+
+This release shipped only after its gate run passed on the release commit: **531 unit tests**
+(90% line coverage of the pure logic layer), **77 UI tests** against a mock daemon, and
+**20 real-daemon end-to-end journeys**.
+
+Full details in the [release notes](https://github.com/henrywang/Berthly/releases/tag/v1.3.0).

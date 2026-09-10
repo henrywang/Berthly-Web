@@ -1,0 +1,59 @@
+---
+title: "Berthly 1.3.1: security patch, one registry behavior change"
+description: "Tracks apple/container 1.3.1. Containerization 0.42.0 fixes CVE-2026-65388 and five more advisories — some in code Berthly links and runs itself, not just the daemon. One behavior change: an HTTP registry that requires authentication now needs an HTTPS endpoint."
+date: 2026-09-10
+tags: [release]
+---
+
+Berthly 1.3.1 is out, tracking
+[apple/container 1.3.1](https://github.com/apple/container/releases/tag/1.3.1). It's a security
+patch: the vendored `apple/container` / `containerization` dependency moves to 1.3.1 / 0.42.0.
+
+## Why the update matters beyond the daemon
+
+apple/container 1.3.1 bumps its Containerization package to 0.42.0, which patches six advisories.
+Most are in daemon-side image unpacking, the content store, and OCI-layout loading — those are
+fixed when you update your `container` install. But Berthly links that package and runs part of
+it in-process, so at least one fix is in code Berthly itself compiles:
+
+- **[CVE-2026-65388](https://github.com/apple/containerization/security/advisories/GHSA-mx96-5vvg-x2mg)**
+  — `RegistryClient` followed the `WWW-Authenticate` realm without checking its host or scheme.
+  Berthly uses `RegistryClient` directly, with your Keychain credentials, for the background
+  image-update check and for "Recreate with Latest Image" and pull. A hostile or intercepted
+  registry could have redirected that credential-bearing token request to another host, or
+  downgraded it to plain HTTP.
+
+The other five (GHSA-x7pf-2jmj-pgcq, GHSA-f689-h8m7-3jp2, GHSA-r3h2-rgqf-9hv9, GHSA-697p-8837-37h3,
+GHSA-g3rx-2m58-rr63) also ride along in 0.42.0.
+
+## One behavior change: HTTP registries that require a login
+
+The CVE fix makes `RegistryClient` refuse the token exchange the moment a non-HTTPS registry
+answers with a `WWW-Authenticate` challenge — whether or not credentials are sent.
+
+- **Public HTTPS registries** (Docker Hub, GHCR, ECR, GCR, Quay) — unaffected.
+- **A plain local registry with no authentication** (`registry:2`, "Allow insecure registry") —
+  unaffected. Anonymous push and pull still work over HTTP.
+- **An HTTP registry that requires a login** (htpasswd or bearer-token auth), including one on
+  `localhost`, a `.internal` name, or a private-network IP — **no longer usable.** Sign-in, pull,
+  and push all fail. It needs an HTTPS endpoint.
+
+There's no workaround short of serving that registry over HTTPS — the `container` CLI's own
+`registry login` fails the same way. When Berthly hits this, the Add Registry sheet now explains
+it in plain terms instead of surfacing a raw `refusing insecure credential exchange` error.
+
+## Getting it
+
+- **Already on Berthly?** Use **Berthly → Check for Updates…**.
+- **New to Berthly?** [Download Berthly-1.3.1.dmg](https://github.com/henrywang/Berthly/releases/latest),
+  open it, and drag **Berthly.app** into Applications. It's Developer ID–signed and notarized, so
+  it opens without warnings.
+
+## Testing
+
+This release shipped only after its gate run passed on the release commit: **532 unit tests**
+(90% line coverage of the pure logic layer), **77 UI tests** against a mock daemon, and
+**20 real-daemon end-to-end journeys** — including one that verifies the new HTTP-registry
+refusal against a live 1.3.1 daemon.
+
+Full details in the [release notes](https://github.com/henrywang/Berthly/releases/tag/v1.3.1).

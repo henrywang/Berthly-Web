@@ -1,0 +1,67 @@
+---
+title: "Berthly 1.5.0: ready for macOS 27, plus Spotlight and Shortcuts"
+description: "The macOS 27 release: three macOS 27 bugs fixed, drag-to-reorder pins and tab-style detail panes on macOS 27, and containers and machines in Spotlight and Shortcuts on both macOS 26 and 27."
+date: 2026-10-10
+tags: [release]
+---
+
+Berthly 1.5.0 is the macOS 27 release. It fixes three bugs that appeared on macOS 27, adopts a
+few macOS 27 interface features, and adds Spotlight and Shortcuts support. It still requires
+macOS 26.0 or later and runs on both macOS 26 and 27. Features marked *macOS 27* below appear
+only there; everything else works on both.
+
+## Spotlight and Shortcuts
+
+Your containers and machines now show up in **Spotlight**. Search for one and press Return, and
+Berthly opens on its detail pane. The index stays current as containers start, stop, or get
+removed.
+
+In the **Shortcuts** app, Berthly now offers six actions: **Start**, **Stop**, and **Open**, each
+for containers and machines. Use them to build automations like "start my dev containers"
+without opening Berthly at all.
+
+Both work on macOS 26 and macOS 27.
+
+## New on macOS 27
+
+- **Drag to reorder pinned items** in the menu bar popover. The order is saved and survives
+  relaunches, and containers and machines each keep their own order. On macOS 26, pins keep
+  their saved order but can't be dragged.
+- **Tab-style detail switcher.** Overview / Logs / Terminal uses macOS 27's tab style, and is
+  exposed to accessibility as real tabs, not radio buttons. macOS 26 keeps the segmented control.
+
+## Fixed
+
+- **Escape didn't close the detail pane on macOS 27.** Pressing Escape with a container or
+  machine detail open did nothing. Berthly now handles Escape itself, scoped to the main window,
+  so Escape inside a sheet still works as before.
+- **The menu bar popover sometimes stayed open** (*macOS 27*). After you picked an action like
+  Run, it occasionally failed to close, about 1 time in 8. It now closes every time.
+- **Quit was ignored while a sheet or alert was open** (*macOS 27*). With the Run Container
+  sheet, the Create Machine sheet, or a delete confirmation open, ⌘Q and the menu bar's Quit did
+  nothing. They now quit normally.
+
+## Smaller improvements
+
+- **Inactive windows look inactive.** When Berthly's window is in the background, the status
+  glyphs on compute rows and the green running count in the sidebar fade, the way Finder and
+  Mail do.
+- **Run stays visible in narrow windows** (macOS 26.1 and later). When the toolbar runs out of
+  room, Build and Pull move into the overflow menu first and Run stays put.
+- Sparkle updated to 2.10.0 and SwiftTerm to 1.18.0.
+
+## Getting it
+
+- **Already on Berthly?** Use **Berthly → Check for Updates…**.
+- **New to Berthly?** [Download Berthly-1.5.0.dmg](https://github.com/henrywang/Berthly/releases/latest),
+  open it, and drag **Berthly.app** into Applications. It's Developer ID–signed and notarized, so
+  it opens without warnings.
+
+## Testing
+
+This release shipped only after its gate run passed on the release commit: **557 unit tests**
+(91% line coverage of the pure logic layer), **83 UI tests** against a mock daemon, and
+**20 real-daemon end-to-end journeys**. CI now runs the unit and UI suites on both macOS 26 and
+macOS 27.
+
+Full details in the [release notes](https://github.com/henrywang/Berthly/releases/tag/v1.5.0).

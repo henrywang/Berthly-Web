@@ -1,0 +1,81 @@
+---
+title: "Berthly 1.6.1: Commit to Image, DNS aliases, and amd64 images that just run"
+description: "Berthly moves to Apple's container 1.6.1: commit a container to an image, give containers DNS aliases, choose a machine's account, and run amd64-only images without picking a platform."
+date: 2026-10-26
+tags: [release]
+---
+
+Berthly 1.6.1 moves to Apple's `container` **1.6.1** and adds the features that release
+introduced. It requires the 1.6.1 daemon. If yours is older, Berthly's System page offers the
+update. container 1.6.1 also brings two upstream security fixes:
+
+- a build-context symlink issue
+  ([GHSA-fqxg-rrf3-358v](https://github.com/apple/container/security/advisories/GHSA-fqxg-rrf3-358v))
+- verification of images pulled by digest
+  ([GHSA-vgrw-36j7-r93w](https://github.com/apple/container/security/advisories/GHSA-vgrw-36j7-r93w))
+
+## Commit to Image
+
+Snapshot a container's filesystem into a new local image. Use the new button in a container's
+detail header or **Commit to Image…** in its right-click menu. It works on running or stopped
+containers.
+
+- The new image runs the container's command by default and keeps its labels.
+- Volumes and mounts aren't included, since they live outside the container's own filesystem.
+- If an image already has that name, the sheet tells you before replacing it.
+
+## DNS aliases on networks
+
+Each network in the Run sheet now has an **Aliases** field. Use it to give the container extra
+DNS names on that network, like `api.example.test`, or a leading-dot name such as `.example.test`
+to match everything below it. Malformed aliases are caught before the run starts. A container's
+aliases show up in its detail view and in the network's endpoint list.
+
+## Choose a machine's account
+
+**Create Machine → Advanced** now lets you set the machine's **user, UID, GID, and home
+directory**. Left blank, it uses your Mac user, as before. Invalid values are caught before the
+image download starts. If the image already ships an account that clashes (Alpine's `nobody`, or
+Ubuntu's `ubuntu` at UID 1000), the error names the account instead of a bare "failed to create
+user".
+
+## amd64-only images just run
+
+Run and Create now pick the platform from the image, the way the 1.6.1 CLI does. An image
+published only for amd64 runs under Rosetta without touching the Platform field. Before, it
+failed with "does not support linux/arm64". Multi-platform images still run natively on Apple
+Silicon, and choosing a platform yourself still wins. On the Run sheet, the default option now
+reads "Default (from image)".
+
+## Fixed
+
+- **The Logs tab stopped following.** Once a container or machine went quiet for half a second,
+  the Logs tab silently stopped showing new lines while still saying "Following". It now keeps
+  tailing until you leave the tab.
+- **Builder start is more resilient.** A stopped builder that fails to restart is now recreated
+  instead of failing your build. Running `container build` in the CLI at the same moment no longer
+  makes Berthly's build fail.
+
+## Also in 1.5.1
+
+If you're coming straight from 1.5.0, you also get the two container 1.6 fixes from 1.5.1:
+
+- **Machines boot on container 1.6.** Plain images like Alpine no longer shut down right after
+  starting, and systemd images like Fedora no longer hang at boot.
+- **Kubernetes cluster nodes stay protected.** Clusters created with the renamed
+  `container cluster` command are hidden from the Compute list and safe from **Clean Up**.
+
+## Getting it
+
+- **Already on Berthly?** Use **Berthly → Check for Updates…**.
+- **New to Berthly?** [Download Berthly-1.6.1.dmg](https://github.com/henrywang/Berthly/releases/latest),
+  open it, and drag **Berthly.app** into Applications. It's Developer ID–signed and notarized, so
+  it opens without warnings.
+
+## Testing
+
+This release shipped only after its gate run passed on the release commit: **611 unit tests**
+(92% line coverage of the pure logic layer), **86 UI tests** against a mock daemon, and
+**28 real-daemon end-to-end journeys**.
+
+Full details in the [release notes](https://github.com/henrywang/Berthly/releases/tag/v1.6.1).

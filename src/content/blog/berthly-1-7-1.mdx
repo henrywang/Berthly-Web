@@ -1,0 +1,72 @@
+---
+title: "Berthly 1.7.1: container 1.7.1, DNS defaults, and CPU that matches container stats"
+description: "Berthly moves to Apple's container 1.7.1: builds work with its new builder, the builder and Run sheet follow the new [container.dns] defaults, and CPU usage reads the same as container stats."
+date: 2026-11-12
+tags: [release]
+---
+
+Berthly 1.7.1 moves to Apple's `container` **1.7.1** and requires it. If your daemon is still on
+1.6.x, Berthly shows its upgrade screen with a one-click install.
+
+## Builds
+
+- **Builds work with the new builder.** container 1.7.1 ships builder shim 0.13.3, whose newer
+  gRPC library rejects requests that lack an `:authority` header. The fix lives in the build code
+  Berthly links, so this release is how Berthly gets it.
+- **Multi-file `COPY` before a tmpfs-mount step no longer fails.** A Dockerfile like
+  `COPY a.txt b.txt /out/` followed by `RUN --mount=type=tmpfs,...` used to fail with
+  `"/b.txt": not found`, because only the first file reached the builder.
+
+## DNS defaults
+
+container 1.7.1 adds a `[container.dns]` section to `~/.config/container/config.toml`:
+
+```toml
+[container.dns]
+domain = "corp.local"
+nameservers = ["1.1.1.1", "8.8.8.8"]
+searchDomains = ["corp.local", "lab.corp.local"]
+options = ["ndots:2", "timeout:1"]
+```
+
+Restart the daemon after editing it. Berthly picks the defaults up in three places:
+
+- **Run sheet.** Containers you run from Berthly get these defaults when the sheet's DNS fields
+  are empty. A value in the sheet overrides them, as the CLI's flags do.
+- **Builder.** Since its first release, Berthly started the build container with `1.1.1.1`
+  hard-coded as its nameserver. The CLI uses the network gateway's resolver instead. Berthly now
+  does the same, and applies `[container.dns]` when it's set. The first build after updating
+  recreates an existing builder once, which clears its build cache.
+- **System page.** The property list shows the defaults as `container.dns.*` rows.
+
+## CPU usage matches `container stats`
+
+The Overview tab's CPU figure is now a percentage of one core, the same unit as
+`container stats` and `docker stats`. A container keeping two cores busy reads about 200%. Before,
+Berthly divided by the Mac's core count, so on a 10-core Mac that container read 20%.
+
+## Clearer resource errors
+
+If you ask the Run sheet for more CPUs than your Mac has, or for less than 200 MiB of memory, you
+now get container's own message ("cpus must be between 1 and …", "minimum memory amount allowed is
+200 MiB"), and no container is created.
+
+## Fixed
+
+**⌘Q quits reliably while a confirmation sheet is open.** If you quit before the sheet had become
+the active window, macOS could refuse to quit.
+
+## Getting it
+
+- **Already on Berthly?** Use **Berthly → Check for Updates…**.
+- **New to Berthly?** [Download Berthly-1.7.1.dmg](https://github.com/henrywang/Berthly/releases/latest),
+  open it, and drag **Berthly.app** into Applications. It's Developer ID–signed and notarized, so
+  it opens without warnings.
+
+## Testing
+
+This release shipped only after its gate run passed on the release commit: **621 unit tests**
+(92% line coverage of the pure logic layer), **86 UI tests** against a mock daemon, and
+**30 real-daemon end-to-end journeys**.
+
+Full details in the [release notes](https://github.com/henrywang/Berthly/releases/tag/v1.7.1).

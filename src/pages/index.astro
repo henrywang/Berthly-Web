@@ -17,7 +17,7 @@ const fmt = (d: Date) =>
 const features = [
   { title: "Images", body: "List, pull from a registry, build from a Dockerfile, and inspect layers and metadata." },
   { title: "Containers", body: "Create and run containers, view details, and stream logs live as they happen." },
-  { title: "Machines", body: "Create and manage VMs, set the kernel, and inspect resources." },
+  { title: "Machines", body: "Create and manage VMs, pick the default machine, and inspect resources." },
   { title: "Networks & volumes", body: "Create, list, and remove them without touching a terminal." },
   { title: "Registries", body: "Sign in to private registries; credentials live in your macOS Keychain." },
   { title: "Integrated terminal", body: "A real terminal attached to your containers, built on SwiftTerm." },
@@ -40,7 +40,7 @@ const jsonLd = {
   offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
   url: "https://berthly.net",
   downloadUrl: "https://github.com/henrywang/Berthly/releases/latest",
-  softwareVersion: "1.7.1",
+  softwareVersion: "1.7.2",
   description:
     "A native macOS GUI for Apple's container tool — build images, run containers and machines, manage networks and volumes, and tail logs.",
 };
@@ -53,8 +53,8 @@ const jsonLd = {
 >
   <section class="hero">
     <div class="container">
-      <a class="badge" href="/blog/berthly-1-7-1/"
-        ><span class="dot"></span>Berthly v1.7.1 is out · Free &amp; open source</a
+      <a class="badge" href="/blog/berthly-1-7-2/"
+        ><span class="dot"></span>Berthly v1.7.2 is out · Free &amp; open source</a
       >
       <h1>Apple's container,<br />finally with a <span class="accent">face.</span></h1>
       <p class="sub">
@@ -232,7 +232,7 @@ const jsonLd = {
           <span class="num">1</span>
           <h3>Download the DMG</h3>
           <p>
-            Grab <code>Berthly-1.7.1.dmg</code> from the
+            Grab <code>Berthly-1.7.2.dmg</code> from the
             <a href="https://github.com/henrywang/Berthly/releases/latest">latest release</a>.
             It's Developer ID–signed and notarized by Apple — no warnings, no workarounds.
           </p>

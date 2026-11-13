@@ -1,0 +1,54 @@
+---
+title: "Berthly 1.7.2: a smaller System page and a cleaner core"
+description: "Berthly 1.7.2 removes the Set Kernel sheet and local DNS domain management, and splits the daemon service code into smaller files. Nothing else you use changes."
+date: 2026-11-13
+tags: [release]
+---
+
+Berthly 1.7.2 is a cleanup release. It stays on Apple's `container` **1.7.1**, removes two System
+page features that rarely need a GUI, and reorganizes the code most bug fixes touch. Nothing else
+you use changes.
+
+## Removed
+
+- **Set Kernel.** Berthly installs the default kernel the first time it starts the daemon, so the
+  sheet only mattered when you wanted a different one. To switch kernels, run
+  `container system kernel set`. The System page still shows which kernel is installed.
+- **Local DNS domains.** Registering a domain under `/etc/resolver` is a one-time setup step, and
+  `sudo container system dns create <domain>` covers it. Domains you already created keep working.
+
+Local DNS domains were the only feature where Berthly ran the `container` CLI as root. With them
+gone, Berthly asks for your admin password only to install or upgrade `container`.
+
+Container DNS settings don't change: the Run sheet's DNS fields, network DNS aliases, and the
+`[container.dns]` defaults from 1.7.1 all work as before.
+
+## Under the hood
+
+- **The daemon service is twelve files instead of one.** `LiveContainerService.swift` had grown to
+  3,500 lines, and most bug fixes landed in it. It's now split by area: builds, runs, machines,
+  images, registries and so on. Behavior is the same, and all 30 real-daemon end-to-end tests pass
+  on the split.
+- **Debug builds catch missing code.** If a service method is ever left unimplemented, debug
+  builds and tests now stop with an assertion instead of quietly doing nothing, and a test checks
+  that they do.
+- **Dead code is gone.** Berthly drops a version check on exporting a running container that
+  could no longer fail, and a macOS 14 code path that can't run on macOS 26.
+- **The push timeout stays.** On container 1.7.1, pushes without credentials to ghcr.io, Docker Hub
+  and Quay fail within seconds. Berthly keeps its timeout anyway, because the upstream sign-in
+  retry loop still has no limit.
+
+## Getting it
+
+- **Already on Berthly?** Use **Berthly → Check for Updates…**.
+- **New to Berthly?** [Download Berthly-1.7.2.dmg](https://github.com/henrywang/Berthly/releases/latest),
+  open it, and drag **Berthly.app** into Applications. It's Developer ID–signed and notarized, so
+  it opens without warnings.
+
+## Testing
+
+This release shipped only after its gate run passed on the release commit: **608 unit tests**
+(87% line coverage of the pure logic layer), **84 UI tests** against a mock daemon,
+and **30 real-daemon end-to-end journeys**.
+
+Full details in the [release notes](https://github.com/henrywang/Berthly/releases/tag/v1.7.2).
